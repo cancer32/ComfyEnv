@@ -1,4 +1,4 @@
-# Comfy-Env: An environment manager for ComfyUI 
+# ComfyEnv: An environment manager for ComfyUI 
 
 ComfyUI is incredibly flexible, but installing different custom nodes or dependencies often leads to conflicts that can break existing setups. ComfyEnv helps you manage isolated environments, so each project or node set can live in its own stable sandbox.
 
