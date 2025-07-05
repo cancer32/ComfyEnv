@@ -21,8 +21,12 @@ ComfyUI is incredibly flexible, but installing different custom nodes or depende
 - [ ] Project structure
 - [ ] Create environment
 	- comfyenv create <env-name> --python=3.10 --no-torch
+- [ ] Query/list environment
+	- comfyenv --list
+- [ ] Remove environment
+	- comfyenv remove <env-name>
 - [ ] Run ComfyUI from an environment
-	- comfyenv run <env-name> [confiui args]
+	- comfyenv run <env-name> -- [confyui args]
 - [ ] Activate env for manual dependency installation
-	- comfyenv activate <env-name> 
+	- comfyenv activate <env-name> --conda-only
 - [ ] GUI or tray icon for quick switching (optional)
