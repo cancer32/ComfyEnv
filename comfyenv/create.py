@@ -44,6 +44,8 @@ def create_env(config_path, args):
         os.system(f'conda create -y -n {config["conda_env_name"]} python=={config["python"]}')
 
     if config['with_torch']:
-        print("Installing pytorch...")
-        os.system(f"conda activate {config["conda_env_name"]} "
-                  f"&& pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/{get_pytorch_cuda()}")
+        print(f'Installing pytorch...')
+        subprocess.run(f'conda run -n {config["conda_env_name"]} ' \
+                       f'pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/{get_pytorch_cuda()}', shell=True)
+
+    config.dump(config['env_config_path'])

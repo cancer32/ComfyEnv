@@ -1,4 +1,4 @@
 #!/bin/bash
 CURRENT_DIR=$(dirname $(realpath $0))
 export PATH="${CURRENT_DIR}:${PATH}"
-$CONDA_DIR/python $CURRENT_DIR/../main.py "$@"
+$CONDA_ROOT/bin/python $CURRENT_DIR/../main.py "$@"
