@@ -1,6 +1,8 @@
 import os
+import sys
 import platform
 import shutil
+import psutil
 
 
 def get_user_shell():
@@ -40,3 +42,40 @@ def copy_extra_model_config(config):
     content = content.replace("ENV_DIR", config["models_dir"])
     with open(dest_config, "w") as file:
         file.write(content)
+
+
+def is_process_running(pid_path):
+    pid_exists = os.path.exists(pid_path)
+    pid = None
+    if not pid_exists:
+        return False
+    with open(pid_path, 'r') as f:
+        pid = int(f.read().strip())
+    if not pid:
+        return False
+    return pid if psutil.pid_exists(pid) else False
+
+
+def stop_process(pid_path):
+    false_or_pid = is_process_running(pid_path)
+    if false_or_pid is not False:
+        os.kill(false_or_pid, 2)
+    if os.path.exists(pid_path):
+        os.remove(pid_path)
+
+
+def create_pid(pid_path):
+    import atexit
+
+    false_or_pid = is_process_running(pid_path)
+    if false_or_pid is not False:
+        print('server is already running: %s, Exiting....' % pid_path)
+        sys.exit(1)
+
+    pid = str(os.getpid())
+    with open(pid_path, "w") as f:
+        f.write(pid)
+
+    def remove_pid():
+        os.remove(pid_path)
+    atexit.register(remove_pid)

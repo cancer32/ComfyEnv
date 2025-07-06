@@ -2,6 +2,7 @@ import subprocess
 from pathlib import Path
 
 from comfyenv.env_config import EnvConfig
+from comfyenv.common import stop_process
 
 
 def get_config(args):
@@ -12,13 +13,21 @@ def get_config(args):
 
 
 def run_comfyui(args):
-    print(f'Starting ComfyUI from environment {args["env_name"]}')
-    config = get_config(args)
-    command = (f'conda run --live-stream -n {config["conda_env_name"]} '
-               f'python {config["comfyenv_root"]}/run_comfy.py {config["env_config_path"]} ')
-    s = subprocess.run(command, shell=True)
+    print(f'Starting ComfyUI from the environment \"{args["env_name"]}\"')
+    config = get_config(args=args)
+    config.dump()
+    command = (
+        f'conda run --live-stream -n {config["conda_env_name"]} '
+        f'python \"{config["comfyenv_root"]}/run_comfy.py\" {config['env_config_path']}'
+    )
+    try:
+        subprocess.run(command, shell=True)
+    except:
+        pass
 
 
-if __name__ == '__main__':
-    import sys
-    sys.argv[1]
+def stop_comfyui(args):
+    print(f'Stopping ComfyUI from the environment \"{args["env_name"]}\"')
+    config = get_config(args=args)
+    pid_path = config["pid_path"]
+    stop_process(pid_path)

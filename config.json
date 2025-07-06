@@ -25,6 +25,7 @@
     "extra_model_paths_config_path": "${env_dir}/${extra_model_paths_config}",
     "temp_dir": "${TEMP}/${USERNAME}_{env_name}",
     "env_config_path": "${env_dir}/${env_config_name}",
-    "pid_path": "${env_dir}/${pid_file_name}"
+    "pid_path": "${env_dir}/${pid_file_name}",
+    "comfyui_args": ["--port", "8188"]
 }
 

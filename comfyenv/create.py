@@ -53,6 +53,11 @@ def create_env(config_path, args):
                    f'git submodule update --remote {config["comfyui_dir_name"]}',
                    shell=True, cwd=config["comfyenv_root"])
 
+    # Installing required modules in both envs
+    subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' 
+                   f'pip install psutil',
+                   shell=True)
+
     # Installing comfyui's requirements.txt
     subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' 
                     f'python -m pip install --upgrade '

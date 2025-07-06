@@ -25,9 +25,9 @@ def get_args():
     activate_parser = subparsers.add_parser("activate", help="Activate an existing environment")
     activate_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to activate")
 
-    # comfyenv install <package-name>
-    install_parser = subparsers.add_parser("install", help="Install a package (e.g., custom node) into the active environment")
-    install_parser.add_argument("package", help="Name of the package to install")
+    # comfyenv stop <package-name>
+    stop_parser = subparsers.add_parser("stop", help="Stops the current running comfyui process from given environment")
+    stop_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to stop")
 
     # comfyenv run <env-name> -- <comfyui args>
     run_parser = subparsers.add_parser("run", help="Run ComfyUI inside a specific environment")
@@ -35,5 +35,4 @@ def get_args():
     run_parser.add_argument("comfyui_args", nargs=argparse.REMAINDER, help="Additional arguments passed to ComfyUI")
 
     args = parser.parse_args().__dict__
-    print(args)
-    return dict((k,v) for k,v in args.items() if v is not None)
+    return dict((k,v) for k,v in args.items() if v not in (None, []))
