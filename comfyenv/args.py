@@ -10,7 +10,7 @@ def get_args():
 
     # comfyenv create <env-name> --python=3.10
     create_parser = subparsers.add_parser("create", help="Create a new environment")
-    create_parser.add_argument("-n", "--name", dest="env_name", help="Name of the environment to create")
+    create_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to create")
     create_parser.add_argument("--python", help="Python version for the environment (e.g., 3.10)")
     create_parser.add_argument("--user-root", help="Custom user root directory path")
     create_parser.add_argument("--envs-root", help="Custom environment root directory path")
@@ -19,12 +19,11 @@ def get_args():
 
     # comfyenv remove <env-name>
     remove_parser = subparsers.add_parser("remove", help="Remove an environment")
-    remove_parser.add_argument("-n", "--name", dest="env_name", default="default", help="Name of the environment to create")
+    remove_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to create")
 
     # comfyenv activate <env-name>
     activate_parser = subparsers.add_parser("activate", help="Activate an existing environment")
-    activate_parser.add_argument("-n", "--name", dest="env_name", default="default", help="Name of the environment to activate")
-    activate_parser.add_argument("--conda-only", action="store_false", help="Load only conda environment, No virtual env")
+    activate_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to activate")
 
     # comfyenv install <package-name>
     install_parser = subparsers.add_parser("install", help="Install a package (e.g., custom node) into the active environment")
@@ -32,7 +31,7 @@ def get_args():
 
     # comfyenv run <env-name> -- <comfyui args>
     run_parser = subparsers.add_parser("run", help="Run ComfyUI inside a specific environment")
-    run_parser.add_argument("-n", "--name", dest="env_name", default="default", help="Name of the environment to run")
+    run_parser.add_argument("-n", "--name", required=True, dest="env_name", help="Name of the environment to run")
     run_parser.add_argument("comfyui_args", nargs=argparse.REMAINDER, help="Additional arguments passed to ComfyUI")
 
     args = parser.parse_args().__dict__

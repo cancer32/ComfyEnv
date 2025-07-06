@@ -1,0 +1,39 @@
+env:
+    base_path: ENV_DIR
+    checkpoints: checkpoints/
+    clip: clip/
+    clip_vision: clip_vision/
+    controlnet: controlnet/
+    diffusers: diffusers/
+    diffusion_models: diffusion_models/
+    embeddings: embeddings/
+    gligen: gligen/
+    hypernetworks: hypernetworks/
+    loras: loras/
+    photomaker: photomaker/
+    style_models: style_models/
+    text_encoders: text_encoders/
+    unet: unet/
+    upscale_models: upscale_models/
+    vae: vae/
+    vae_approx: vae_approx/
+
+home:
+    base_path: HOME_DATA
+    checkpoints: checkpoints/
+    clip: clip/
+    clip_vision: clip_vision/
+    controlnet: controlnet/
+    diffusers: diffusers/
+    diffusion_models: diffusion_models/
+    embeddings: embeddings/
+    gligen: gligen/
+    hypernetworks: hypernetworks/
+    loras: loras/
+    photomaker: photomaker/
+    style_models: style_models/
+    text_encoders: text_encoders/
+    unet: unet/
+    upscale_models: upscale_models/
+    vae: vae/
+    vae_approx: vae_approx/

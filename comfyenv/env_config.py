@@ -112,26 +112,3 @@ class EnvConfig(JsonParser):
 
     def __getitem__(self, key: str) -> Any:
         return self.get_value(key)
-
-
-def load_env_config(env):
-    pass
-
-
-
-"""
-a = {
-  "name": "MyApp",
-  "TEMP": "HELLO",
-  "home_dir": ["${TEMP}", "World"],
-  "log_dir": "${home_dir}\\logs",
-  "nested": {
-    "welcome": "Welcome to ${name}"
-  }
-}
-
-c = EnvConfig(a)
-c['test'] = '${TEMP}/hitesh.mistry'
-print(c['nested']['welcome'])
-print(c.get('log_dir'))
-"""

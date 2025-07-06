@@ -5,6 +5,7 @@ import subprocess
 
 from .env_config import EnvConfig, JsonParser
 from .torch_cuda import get_pytorch_cuda
+from .common import copy_extra_model_config
 
 
 def get_config(config_path, args):
@@ -14,10 +15,7 @@ def get_config(config_path, args):
     config["TEMP"] = gettempdir()
     config["USERNAME"] = os.getlogin()
     config["COMFYENV_ROOT"] = str(Path(__file__).resolve().parent.parent)
-    config["conda_env_name"] = args.get(
-        "conda_env_name",
-        ('comfyui' + ''.join(args.get("python", "3.12.*").split('.')[0:2]))
-    )
+    config["conda_env_name"] = args.get("conda_env_name", config["env_name"])
     return config
 
 
@@ -41,11 +39,38 @@ def create_env(config_path, args):
 
     if not conda_env_exists:
         print(f"Creating environment '{config['env_name']}' with Python {config['python']}")
-        os.system(f'conda create -y -n {config["conda_env_name"]} python=={config["python"]}')
+        subprocess.run(f'conda create -y -n {config["conda_env_name"]} python=={config["python"]}', shell=True)
 
     if config['with_torch']:
         print(f'Installing pytorch...')
-        subprocess.run(f'conda run -n {config["conda_env_name"]} ' \
-                       f'pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/{get_pytorch_cuda()}', shell=True)
+        subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' 
+                       f'pip install torch torchvision torchaudio '
+                       f'--index-url https://download.pytorch.org/whl/{get_pytorch_cuda()}',
+                       shell=True)
+
+    # Pulling comfyui
+    subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} '
+                   f'git submodule update --remote {config["comfyui_dir_name"]}',
+                   shell=True, cwd=config["comfyenv_root"])
+
+    # Installing comfyui's requirements.txt
+    subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' 
+                    f'python -m pip install --upgrade '
+                    f'pip -r "{config["comfyui_root"]}/requirements.txt"',
+                    shell=True)
+
+    # Installing/Updating ComfyUI-Manager
+    comfy_manager_dir = f'{config["env_dir"]}/custom_nodes/comfyui-manager'
+    if (Path(comfy_manager_dir) / ".git").exists():
+        subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' \
+                    f'git pull',
+                    shell=True, cwd=comfy_manager_dir)
+    else:
+        subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} ' \
+                    f'git clone "https://github.com/ltdrdata/ComfyUI-Manager" "{comfy_manager_dir}"',
+                    shell=True)
+
+    # Copying extra_model_config
+    copy_extra_model_config(config=config)
 
     config.dump(config['env_config_path'])
