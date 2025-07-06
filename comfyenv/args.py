@@ -12,10 +12,10 @@ def get_args():
     create_parser = subparsers.add_parser("create", help="Create a new environment")
     create_parser.add_argument("-n", "--name", dest="env_name", help="Name of the environment to create")
     create_parser.add_argument("--python", help="Python version for the environment (e.g., 3.10)")
-    create_parser.add_argument("--user_root", help="Custom user root directory path")
-    create_parser.add_argument("--env_root", help="Custom environment root directory path")
+    create_parser.add_argument("--user-root", help="Custom user root directory path")
+    create_parser.add_argument("--envs-root", help="Custom environment root directory path")
     create_parser.add_argument("--conda-env-name", help="Optional: custom name for the conda environment")
-    create_parser.add_argument("--no-torch", action="store_true", help="Skip installing the torch library")
+    create_parser.add_argument("--with-torch", action="store_true", help="Install the py torch library with cuda")
 
     # comfyenv remove <env-name>
     remove_parser = subparsers.add_parser("remove", help="Remove an environment")
