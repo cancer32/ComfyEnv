@@ -40,7 +40,7 @@ def main(args):
     with open(main_py) as f:
         try:
             code = compile(f.read(), "main.py", 'exec')
-            exec(code, {'__name__': '__main__', '__file__' : main_py})
+            exec(code, {'__name__': '__main__', '__file__': main_py})
             ret = 0
         except Exception as e:
             print('Error: %s' % str(e))

@@ -26,7 +26,8 @@ def get_pytorch_cuda(min_major=11, min_minor=1):
     try:
         major, minor = map(int, cuda_version.split('.'))
     except ValueError:
-        raise ValueError("Invalid CUDA version format. Expected format: '12.7'")
+        raise ValueError(
+            "Invalid CUDA version format. Expected format: '12.7'")
 
     while (major > min_major) or (major == min_major and minor >= min_minor):
         cuda_tag = f"{major}{minor}"
@@ -57,5 +58,3 @@ def get_pytorch_cuda(min_major=11, min_minor=1):
 
     print("No supported CUDA version found in PyTorch index. using cpu")
     return "cpu"
-
-

@@ -13,7 +13,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 
 def get_config(args, config_path=None):
-    _loaded_default_config = False 
+    _loaded_default_config = False
     if config_path is None:
         config_path = ROOT_DIR / 'config.json'
         _loaded_default_config = True
@@ -25,14 +25,16 @@ def get_config(args, config_path=None):
         config["TEMP"] = gettempdir()
         config["USERNAME"] = os.getlogin()
         config["COMFYENV_ROOT"] = str(ROOT_DIR)
-        config["conda_env_name"] = args.get("conda_env_name", config["env_name"])
+        config["conda_env_name"] = args.get("conda_env_name",
+                                            config["env_name"])
     return config
 
 
 def find_config(args):
     config_path = ROOT_DIR / "envs" / args['env_name'] / "config.json"
     if not config_path.exists():
-        raise IOError(f'Error: could not find the environment: {args["env_name"]}')
+        raise IOError(f'Error: could not find the environment: '
+                      f'{args["env_name"]}')
     return config_path
 
 

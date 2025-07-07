@@ -5,7 +5,7 @@ from typing import Any, Dict, AnyStr
 
 
 class JsonParser(dict):
-    def __init__(self, data: Dict=None):
+    def __init__(self, data: Dict = None):
         """Constructor
 
         :param data: Dictionary data to create json, defaults to None
@@ -39,7 +39,7 @@ class JsonParser(dict):
         """
         return cls(data=json.loads(json_str))
 
-    def dump(self, file_path: AnyStr=None):
+    def dump(self, file_path: AnyStr = None):
         """Exports the instance data to json file
 
         :param file_path: output json file path, defaults to None

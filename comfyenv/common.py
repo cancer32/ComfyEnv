@@ -10,7 +10,8 @@ def get_user_shell():
 
     if system == 'Windows':
         # Try to get COMSPEC (usually cmd.exe), fallback to powershell
-        shell = os.environ.get('COMSPEC')  # Usually C:\Windows\System32\cmd.exe
+        # Usually C:\Windows\System32\cmd.exe
+        shell = os.environ.get('COMSPEC')
         if not shell:
             # Fallback: check for PowerShell
             shell = shutil.which('powershell') or shutil.which('cmd')
@@ -71,12 +72,14 @@ def stop_process(pid_path, quiet=False):
     if not process_killed and not quiet:
         raise IOError('No process found to stop')
 
+
 def create_pid(pid_path):
     import atexit
 
     false_or_pid = is_process_running(pid_path)
     if false_or_pid is not False:
-        raise RuntimeError('server is already running: %s, Exiting....' % pid_path)
+        raise RuntimeError('server is already running: %s, Exiting....'
+                           % pid_path)
 
     pid = str(os.getpid())
     with open(pid_path, "w") as f:
