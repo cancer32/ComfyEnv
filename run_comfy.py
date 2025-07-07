@@ -3,10 +3,11 @@ import sys
 import shlex
 
 from comfyenv.env_config import EnvConfig
-from comfyenv.common import create_pid
+from comfyenv.common import create_pid, stop_process
 
 
 def main(args):
+    ret = 0
     config = EnvConfig.load(args[1])
     sys.path.append(config["comfyui_root"])
 
@@ -35,11 +36,15 @@ def main(args):
         try:
             code = compile(f.read(), "main.py", 'exec')
             exec(code, {'__name__': '__main__', '__file__' : main_py})
+            ret = 0
         except Exception as e:
             print('Error: %s' % str(e))
-            return 1
+            ret = 1
         finally:
-            os.remove(pid_path)
+            stop_process(pid_path, quiet=True)
+
+    return ret
+
 
 if __name__ == '__main__':
     os._exit(main(sys.argv))

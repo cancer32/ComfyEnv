@@ -1,27 +1,13 @@
 import os
 from pathlib import Path
-from tempfile import gettempdir
 import subprocess
 
-from .env_config import EnvConfig, JsonParser
+from .env_config import JsonParser
 from .torch_cuda import get_pytorch_cuda
 from .common import copy_extra_model_config
 
 
-def get_config(config_path, args):
-    config = EnvConfig.load(config_path)
-    config.update(args)
-    config["HOME"] = str(Path.home())
-    config["TEMP"] = gettempdir()
-    config["USERNAME"] = os.getlogin()
-    config["COMFYENV_ROOT"] = str(Path(__file__).resolve().parent.parent)
-    config["conda_env_name"] = args.get("conda_env_name", config["env_name"])
-    return config
-
-
-def create_env(config_path, args):
-    config = get_config(config_path, args)
-
+def create_env(config):
     # Create directories
     os.makedirs(f"{config['user_dir']}/input", exist_ok=True)
     os.makedirs(f"{config['user_dir']}/output", exist_ok=True)

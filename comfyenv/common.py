@@ -56,12 +56,24 @@ def is_process_running(pid_path):
     return pid if psutil.pid_exists(pid) else False
 
 
-def stop_process(pid_path):
+def stop_process(pid_path, quiet=False):
     false_or_pid = is_process_running(pid_path)
-    if false_or_pid is not False:
-        os.kill(false_or_pid, 2)
-    if os.path.exists(pid_path):
-        os.remove(pid_path)
+    process_killed = False
+    try:
+        if false_or_pid is not False:
+            os.kill(false_or_pid, 2)
+            process_killed = True
+    except Exception as e:
+        print('Error: stopping process: %s' % str(e))
+
+    try:
+        if os.path.exists(pid_path):
+            os.remove(pid_path)
+    except Exception as e:
+        print('Error: removing pid file: %s' % str(e))
+
+    if not process_killed and not quiet:
+        raise IOError('No process found to stop')
 
 
 def create_pid(pid_path):
@@ -77,5 +89,5 @@ def create_pid(pid_path):
         f.write(pid)
 
     def remove_pid():
-        os.remove(pid_path)
+        stop_process(pid_path)
     atexit.register(remove_pid)

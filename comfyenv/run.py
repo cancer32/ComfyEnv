@@ -1,24 +1,14 @@
 import subprocess
-from pathlib import Path
 
-from comfyenv.env_config import EnvConfig
 from comfyenv.common import stop_process
 
 
-def get_config(args):
-    config_path = Path(__file__).resolve().parent.parent / "envs" / args['env_name'] / "config.json"
-    config = EnvConfig.load(config_path)
-    config.update(args)
-    return config
-
-
-def run_comfyui(args):
-    print(f'Starting ComfyUI from the environment \"{args["env_name"]}\"')
-    config = get_config(args=args)
+def run_comfyui(config):
+    print(f'Starting ComfyUI from the environment \"{config["env_name"]}\"')
     config.dump()
     command = (
         f'conda run --live-stream -n {config["conda_env_name"]} '
-        f'python \"{config["comfyenv_root"]}/run_comfy.py\" {config['env_config_path']}'
+        f'python \"{config["comfyenv_root"]}/run_comfy.py\" {config["env_config_path"]}'
     )
     try:
         subprocess.run(command, shell=True)
@@ -26,8 +16,7 @@ def run_comfyui(args):
         pass
 
 
-def stop_comfyui(args):
-    print(f'Stopping ComfyUI from the environment \"{args["env_name"]}\"')
-    config = get_config(args=args)
+def stop_comfyui(config):
+    print(f'Stopping ComfyUI from the environment \"{config["env_name"]}\"')
     pid_path = config["pid_path"]
-    stop_process(pid_path)
+    return stop_process(pid_path)
