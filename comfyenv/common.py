@@ -66,15 +66,10 @@ def stop_process(pid_path, quiet=False):
     except Exception as e:
         print('Error: stopping process: %s' % str(e))
 
-    try:
-        if os.path.exists(pid_path):
-            os.remove(pid_path)
-    except Exception as e:
-        print('Error: removing pid file: %s' % str(e))
+    remove_pid(pid_path)
 
     if not process_killed and not quiet:
         raise IOError('No process found to stop')
-
 
 def create_pid(pid_path):
     import atexit
@@ -88,6 +83,14 @@ def create_pid(pid_path):
     with open(pid_path, "w") as f:
         f.write(pid)
 
-    def remove_pid():
-        stop_process(pid_path)
-    atexit.register(remove_pid)
+    def remove_pid_file():
+        remove_pid(pid_path)
+    atexit.register(remove_pid_file)
+
+
+def remove_pid(pid_path):
+    try:
+        if os.path.exists(pid_path):
+            os.remove(pid_path)
+    except Exception as e:
+        print('Error: removing pid file: %s' % str(e))

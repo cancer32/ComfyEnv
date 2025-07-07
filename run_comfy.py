@@ -3,7 +3,7 @@ import sys
 import shlex
 
 from comfyenv.env_config import EnvConfig
-from comfyenv.common import create_pid, stop_process
+from comfyenv.common import create_pid, remove_pid
 
 
 def main(args):
@@ -41,7 +41,7 @@ def main(args):
             print('Error: %s' % str(e))
             ret = 1
         finally:
-            stop_process(pid_path, quiet=True)
+            remove_pid(pid_path)
 
     return ret
 
