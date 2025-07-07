@@ -10,6 +10,7 @@
     "extra_model_paths_config": "extra_model_paths.yaml",
     "env_config_name": "config.json",
     "pid_file_name": "${env_name}.pid",
+    "env_created": false,
     "HOME": null,
     "TEMP": null,
     "USERNAME": null,

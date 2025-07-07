@@ -67,4 +67,6 @@ def create_env(config):
     # Copying extra_model_config
     copy_extra_model_config(config=config)
 
+    # Savning env config
+    config['env_created'] = True
     config.dump(config['env_config_path'])

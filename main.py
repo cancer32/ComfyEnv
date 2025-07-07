@@ -7,6 +7,7 @@ from comfyenv.args import get_args
 from comfyenv.create import create_env
 from comfyenv.activate import activate_env
 from comfyenv.run import run_comfyui, stop_comfyui
+from comfyenv.list_env import list_envs
 
 # Variables
 ROOT_DIR = Path(__file__).resolve().parent
@@ -50,6 +51,8 @@ def main():
             stop_comfyui(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "run":
             run_comfyui(get_config(args=args, config_path=find_config(args)))
+        elif args['command'] == "list":
+            list_envs(get_config(args=args))
     except Exception as e:
         print(f'Error: {str(e)}')
         ret = 1
