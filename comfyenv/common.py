@@ -76,8 +76,7 @@ def create_pid(pid_path):
 
     false_or_pid = is_process_running(pid_path)
     if false_or_pid is not False:
-        print('server is already running: %s, Exiting....' % pid_path)
-        sys.exit(1)
+        raise RuntimeError('server is already running: %s, Exiting....' % pid_path)
 
     pid = str(os.getpid())
     with open(pid_path, "w") as f:

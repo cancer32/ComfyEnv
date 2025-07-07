@@ -7,13 +7,17 @@ from comfyenv.common import create_pid, remove_pid
 
 
 def main(args):
-    ret = 0
     config = EnvConfig.load(args[1])
     sys.path.append(config["comfyui_root"])
 
     main_py = f'{config["comfyui_root"]}/main.py'
     pid_path = config["pid_path"]
-    create_pid(pid_path)
+
+    try:
+        create_pid(pid_path)
+    except RuntimeError as e:
+        print('Error: %s' % str(e))
+        return 1
 
     new_args = shlex.split(
         f'"{main_py}" '
@@ -32,6 +36,7 @@ def main(args):
         comfyui_args.remove('--')
     sys.argv = new_args + comfyui_args
 
+    ret = 0
     with open(main_py) as f:
         try:
             code = compile(f.read(), "main.py", 'exec')
