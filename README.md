@@ -33,8 +33,8 @@ Before using ComfyEnv, make sure the following are installed:
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/comfyenv.git
-cd comfyenv
+git clone https://github.com/cancer32/ComfyEnv.git
+cd ComfyEnv
 pip install -r requirements.txt
 ```
 
