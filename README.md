@@ -48,9 +48,8 @@ pip install -r requirements.txt
 
 ---
 
-## Usage
+### Directory Structure
 
-### Structure
 ```
 ComfyEnv/
 ├── bin/
@@ -58,7 +57,13 @@ ComfyEnv/
 ├── envs/                # Contains all isolated environments
 │   └── <env_name>/      # A specific ComfyUI environment
 ├── models/              # Shared models directory accessible from all environments
+│   └── checkpoints/
+│   └── vae/
+│   └── .../
 ```
+---
+
+## Usage
 
 ### Create a new environment
 
