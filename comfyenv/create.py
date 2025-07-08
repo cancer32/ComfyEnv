@@ -50,7 +50,7 @@ def create_env(config):
                        shell=True)
     if config["comfyui_version"] != "latest":
         subprocess.run(f'git checkout tags/{config["comfyui_version"]}',
-                       shell=True, cwd=config["comfyenv_root"])
+                       shell=True, cwd=comfyui_root)
 
     # Installing comfyui's requirements.txt
     subprocess.run(f'conda run --live-stream -n {config["conda_env_name"]} '

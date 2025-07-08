@@ -98,8 +98,7 @@ bin/comfyenv stop -n my-env
 - [x] List environments
 - [x] Run ComfyUI from environment
 - [x] Stop ComfyUI
-- [ ] **Remove environment**
-  - `comfyenv remove -n <env-name>`
+- [X] Remove environment
 - [ ] **Update environment**
   - `comfyenv update -n <env-name>`
 - [ ] **Activate env for manual dependency installation**

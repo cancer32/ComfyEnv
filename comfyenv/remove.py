@@ -21,9 +21,10 @@ def remove_env(config):
                    shell=True)
 
     shell = get_user_shell()
-    if '/cmd.exe' in shell.lower():
+    if 'cmd.exe' in shell.lower():
+        print("HEEE")
         os.system(f'rmdir /S /Q "{env_dir}"')
-    elif '/bash' in shell:
+    elif 'bash' in shell:
         os.system(f'rm -fr "{env_dir}"')
     else:
         shutil.rmtree(env_dir)
