@@ -14,7 +14,6 @@ ComfyUI is incredibly flexible, but installing different custom nodes or depende
 
 - Isolated **Conda environments** per ComfyUI setup
 - Install and run ComfyUI without dependency conflicts
-- Torch installation support (`--with-torch`)
 - Clean separation of node configurations
 - CLI tool for managing environments
 - Built-in stop/start functionality for running ComfyUI instances
@@ -51,28 +50,38 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Structure
+```
+ComfyEnv/
+├── bin/
+│   └── comfyenv         # The main CLI script or executable
+├── envs/                # Contains all isolated environments
+│   └── <env_name>/      # A specific ComfyUI environment
+├── models/              # Shared models directory accessible from all environments
+```
+
 ### Create a new environment
 
 ```bash
-comfyenv create my-env --python=3.10 --with-torch
+bin/comfyenv create my-env --python=3.10 --comfy-version=v0.3.43
 ```
 
 ### List all environments
 
 ```bash
-comfyenv list
+bin/comfyenv list
 ```
 
 ### Run ComfyUI inside an environment
 
 ```bash
-comfyenv run -n my-env -- [comfyui args]
+bin/comfyenv run -n my-env -- [comfyui args]
 ```
 
 ### Stop ComfyUI running in an environment
 
 ```bash
-comfyenv stop -n my-env
+bin/comfyenv stop -n my-env
 ```
 
 ---
