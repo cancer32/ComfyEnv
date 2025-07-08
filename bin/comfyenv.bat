@@ -39,7 +39,7 @@ for %%P in (%POSSIBLE_PATHS%) do (
 
 :run
     set BIN_DIR=%~dp0
-    set PATH=%BIN_DIR%;%PATH%
+    set PATH=%BIN_DIR%;%CONDA_ROOT%;%PATH%
     %CONDA_ROOT%/python.exe %BIN_DIR%/../main.py %*
     goto :eof
 

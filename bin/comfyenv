@@ -33,5 +33,5 @@ if [ -z "$CONDA_ROOT" ]; then
 fi
 
 CURRENT_DIR=$(dirname $(realpath $0))
-export PATH="${CURRENT_DIR}:${PATH}"
+export PATH="${CURRENT_DIR}:$CONDA_ROOT/bin:${PATH}"
 $CONDA_ROOT/bin/python $CURRENT_DIR/../main.py "$@"

@@ -10,10 +10,7 @@ def run_comfyui(config):
         f'conda run --live-stream -n {config["conda_env_name"]} '
         f'python \"{config["comfyenv_root"]}/run_comfy.py\" {config["env_config_path"]}'
     )
-    try:
-        subprocess.run(command, shell=True)
-    except:
-        pass
+    subprocess.run(command, shell=True)
 
 
 def stop_comfyui(config):

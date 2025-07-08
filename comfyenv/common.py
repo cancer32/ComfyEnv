@@ -2,7 +2,6 @@ import os
 import sys
 import platform
 import shutil
-import psutil
 
 
 def get_user_shell():
@@ -40,12 +39,13 @@ def copy_extra_model_config(config):
     # Replace BASE_PATH with the actual models directory path
     with open(dest_config, "r") as file:
         content = file.read()
-    content = content.replace("ENV_DIR", config["models_dir"])
+    content = content.replace("MODELS_DIR", config["models_dir"])
     with open(dest_config, "w") as file:
         file.write(content)
 
 
 def is_process_running(pid_path):
+    import psutil
     pid_exists = os.path.exists(pid_path)
     pid = None
     if not pid_exists:
@@ -73,13 +73,18 @@ def stop_process(pid_path, quiet=False):
         raise IOError('No process found to stop')
 
 
-def create_pid(pid_path):
+def create_pid(pid_path, port):
     import atexit
 
+    port_occupied, running_pid = is_port_listening(port)
+
     false_or_pid = is_process_running(pid_path)
-    if false_or_pid is not False:
-        raise RuntimeError('server is already running: %s, Exiting....'
+    if false_or_pid is not False and false_or_pid == running_pid:
+        raise RuntimeError('ComfyUI is already running: %s, Exiting....'
                            % pid_path)
+    if port_occupied:
+        raise RuntimeError(f'Port {port} already listening, '
+                           'Please try some other port')
 
     pid = str(os.getpid())
     with open(pid_path, "w") as f:
@@ -96,3 +101,11 @@ def remove_pid(pid_path):
             os.remove(pid_path)
     except Exception as e:
         print('Error: removing pid file: %s' % str(e))
+
+
+def is_port_listening(port):
+    import psutil
+    for conn in psutil.net_connections(kind='inet'):
+        if conn.laddr.port == int(port) and conn.status == psutil.CONN_LISTEN:
+            return True, conn.pid
+    return False, 0

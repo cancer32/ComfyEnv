@@ -24,8 +24,8 @@ def get_args():
                                help="Custom environment root directory path")
     create_parser.add_argument("--conda-env-name",
                                help="Optional: custom name for the conda environment")
-    create_parser.add_argument("--with-torch", action="store_true",
-                               help="Install the py torch library with cuda")
+    create_parser.add_argument("--comfyui-version",
+                               help="ComfyUI version tag to checkout, eg 'v0.3.43' default: latest")
 
     # comfyenv remove -n <env-name>
     remove_parser = subparsers.add_parser("remove",

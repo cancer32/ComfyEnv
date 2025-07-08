@@ -3,7 +3,7 @@ import sys
 import shlex
 
 from comfyenv.env_config import EnvConfig
-from comfyenv.common import create_pid, remove_pid
+from comfyenv.common import create_pid, remove_pid, is_port_listening
 
 
 def main(args):
@@ -14,14 +14,19 @@ def main(args):
     pid_path = config["pid_path"]
 
     try:
-        create_pid(pid_path)
+        idx = config["comfyui_args"].index('--port') + 1
+        port = config["comfyui_args"][idx]
+    except (ValueError, IndexError):
+        port = 8188
+
+    try:
+        create_pid(pid_path, port)
     except RuntimeError as e:
         print('Error: %s' % str(e))
         return 1
 
     new_args = shlex.split(
         f'"{main_py}" '
-        f'--base-directory \"{config["env_dir"]}\" '
         f'--output-directory \"{config["user_dir"]}/output\" '
         f'--temp-directory \"{config["temp_dir"]}\" '
         f'--input-directory \"{config["user_dir"]}/input\" '
