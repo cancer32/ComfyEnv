@@ -32,6 +32,8 @@ def get_args():
                                           help="Remove an environment")
     remove_parser.add_argument("-n", "--name", required=True, dest="env_name",
                                help="Name of the environment to create")
+    remove_parser.add_argument("-y", "--yes", action="store_true",
+                               help="wont ask for confirmation prompt")
 
     # comfyenv activate -n <env-name>
     activate_parser = subparsers.add_parser("activate",
