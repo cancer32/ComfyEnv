@@ -68,7 +68,7 @@ ComfyEnv/
 ### Create a new environment
 
 ```bash
-bin/comfyenv create my-env --python=3.10 --comfy-version=v0.3.43
+bin/comfyenv create my-env --python=3.10 --comfyui-version=v0.3.43
 ```
 
 ### List all environments
