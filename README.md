@@ -32,6 +32,7 @@ Before using ComfyEnv, make sure the following are installed:
 ## Installation
 
 ```bash
+conda activate
 git clone https://github.com/cancer32/ComfyEnv.git
 cd ComfyEnv
 pip install -r requirements.txt
