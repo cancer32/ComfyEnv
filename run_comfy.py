@@ -3,7 +3,7 @@ import sys
 import shlex
 
 from comfyenv.env_config import EnvConfig
-from comfyenv.common import create_pid, remove_pid, is_port_listening
+from comfyenv.common import create_pid, remove_pid
 
 
 def main(args):

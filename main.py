@@ -47,7 +47,8 @@ def main():
         if args['command'] == "create":
             create_update_env(get_config(args=args))
         elif args['command'] == "update":
-            create_update_env(get_config(args=args, config_path=find_config(args)))
+            create_update_env(
+                get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "activate":
             activate_env(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "stop":
