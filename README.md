@@ -71,6 +71,8 @@ ComfyEnv/
 ```bash
 bin/comfyenv create my-env --python=3.10 --comfyui-version=v0.3.43
 ```
+> Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment 
+
 
 ### List all environments
 
@@ -100,8 +102,6 @@ bin/comfyenv stop -n my-env
 - [x] Run ComfyUI from environment
 - [x] Stop ComfyUI
 - [X] Remove environment
-- [ ] **Update environment**
-  - `comfyenv update -n <env-name>`
-- [ ] **Activate env for manual dependency installation**
-  - `comfyenv activate -n <env-name> --conda-only`
+- [X] Update environment
+- [X] Activate env for manual dependency installation
 - [ ] **GUI or tray icon for quick switching** (optional)
