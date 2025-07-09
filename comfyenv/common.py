@@ -77,10 +77,9 @@ def create_pid(pid_path, port):
     import atexit
 
     port_occupied, running_pid = is_port_listening(port)
-
     false_or_pid = is_process_running(pid_path)
-    if false_or_pid is not False and false_or_pid == running_pid:
-        raise RuntimeError('ComfyUI is already running: %s, Exiting....'
+    if false_or_pid is not False:
+        raise RuntimeError('Seems ComfyUI is already running: %s, Exiting....'
                            % pid_path)
     if port_occupied:
         raise RuntimeError(f'Port {port} already listening, '
