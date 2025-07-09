@@ -4,7 +4,7 @@ from pathlib import Path
 
 from comfyenv.env_config import EnvConfig
 from comfyenv.args import get_args
-from comfyenv.create import create_env
+from comfyenv.create import create_update_env
 from comfyenv.activate import activate_env
 from comfyenv.run import run_comfyui, stop_comfyui
 from comfyenv.list import list_envs
@@ -45,7 +45,9 @@ def main():
     ret = 0
     try:
         if args['command'] == "create":
-            create_env(get_config(args=args))
+            create_update_env(get_config(args=args))
+        elif args['command'] == "update":
+            create_update_env(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "activate":
             activate_env(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "stop":
@@ -56,6 +58,7 @@ def main():
             list_envs(get_config(args=args))
         elif args['command'] == "remove":
             remove_env(get_config(args=args))
+
     except Exception as e:
         print(f'Error: {str(e)}')
         ret = 1

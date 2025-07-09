@@ -7,7 +7,7 @@ from .torch_cuda import get_pytorch_cuda
 from .common import copy_extra_model_config
 
 
-def create_env(config):
+def create_update_env(config):
     # Create directories
     os.makedirs(f"{config['user_dir']}/input", exist_ok=True)
     os.makedirs(f"{config['user_dir']}/output", exist_ok=True)
@@ -73,9 +73,9 @@ def create_env(config):
                    f'-r "{comfy_manager_dir}/requirements.txt" ',
                    shell=True)
 
-    # Copying extra_model_config
-    copy_extra_model_config(config=config)
-
-    # Savning env config
-    config['env_created'] = True
-    config.dump(config['env_config_path'])
+    if config["command"] == "create":
+        # Copying extra_model_config
+        copy_extra_model_config(config=config)
+        # Savning env config
+        config['env_created'] = True
+        config.dump(config['env_config_path'])

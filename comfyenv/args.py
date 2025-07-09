@@ -27,9 +27,15 @@ def get_args():
     create_parser.add_argument("--comfyui-version",
                                help="ComfyUI version tag to checkout, eg 'v0.3.43' default: latest")
 
+    # comfyenv update -n <env-name>
+    update_parser = subparsers.add_parser("update",
+                                          help="Update given environment")
+    update_parser.add_argument("-n", "--name", required=True, dest="env_name",
+                               help="Name of the environment to create")
+
     # comfyenv remove -n <env-name>
     remove_parser = subparsers.add_parser("remove",
-                                          help="Remove an environment")
+                                          help="Remove the given environment data")
     remove_parser.add_argument("-n", "--name", required=True, dest="env_name",
                                help="Name of the environment to create")
     remove_parser.add_argument("-y", "--yes", action="store_true",
