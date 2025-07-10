@@ -61,7 +61,7 @@ def main():
             remove_env(get_config(args=args))
 
     except Exception as e:
-        print(f'Error: {str(e)}')
+        print(f'Error: {str(e)}', flush=True)
         ret = 1
     return ret
 

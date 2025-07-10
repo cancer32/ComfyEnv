@@ -22,7 +22,7 @@ def main(args):
     try:
         create_pid(pid_path, port)
     except RuntimeError as e:
-        print('Error: %s' % str(e))
+        print('Error: %s' % str(e), flush=True)
         return 1
 
     new_args = shlex.split(
@@ -48,7 +48,7 @@ def main(args):
             exec(code, {'__name__': '__main__', '__file__': main_py})
             ret = 0
         except Exception as e:
-            print('Error: %s' % str(e))
+            print('Error: %s' % str(e), flush=True)
             ret = 1
         finally:
             remove_pid(pid_path)

@@ -16,16 +16,15 @@ def remove_env(config):
                     f'"{config["env_name"]}" ? (yes/[no]): ')
         if ans.lower() not in ('yes', 'y'):
             return
-    print(f'Removing environment "{config['env_name']}"')
+    print(f'Removing environment "{config['env_name']}"', flush=True)
     subprocess.run(f'conda env remove -y -n {config["conda_env_name"]}',
                    shell=True)
 
     shell = get_user_shell()
     if 'cmd.exe' in shell.lower():
-        print("HEEE")
         os.system(f'rmdir /S /Q "{env_dir}"')
     elif 'bash' in shell:
         os.system(f'rm -fr "{env_dir}"')
     else:
         shutil.rmtree(env_dir)
-    print("Done")
+    print("Done", flush=True)

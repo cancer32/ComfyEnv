@@ -65,7 +65,7 @@ def stop_process(pid_path, quiet=False):
             os.kill(false_or_pid, 2)
             process_killed = True
     except Exception as e:
-        print('Error: stopping process: %s' % str(e))
+        print('Error: stopping process: %s' % str(e), flush=True)
 
     remove_pid(pid_path)
 
@@ -99,7 +99,7 @@ def remove_pid(pid_path):
         if os.path.exists(pid_path):
             os.remove(pid_path)
     except Exception as e:
-        print('Error: removing pid file: %s' % str(e))
+        print('Error: removing pid file: %s' % str(e), flush=True)
 
 
 def is_port_listening(port):

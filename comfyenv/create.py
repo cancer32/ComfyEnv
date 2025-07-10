@@ -25,12 +25,12 @@ def create_update_env(config):
 
     if not conda_env_exists:
         print(f"Creating environment '{config['env_name']}' "
-              f"with Python {config['python']}")
+              f"with Python {config['python']}", flush=True)
         subprocess.run(f'conda create -y -n {config["conda_env_name"]} python=={config["python"]}',
                        shell=True)
 
     # Installing pytorch
-    print(f'Installing pytorch...')
+    print(f'Installing pytorch...', flush=True)
     torch_requirements = (Path(config["COMFYENV_ROOT"])
                           / "torch_requirements.txt")
     torch_dep = (torch_requirements.read_text()
