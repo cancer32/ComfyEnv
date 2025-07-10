@@ -1,8 +1,9 @@
 import os
+import traceback
 from tempfile import gettempdir
 from pathlib import Path
 
-from comfyenv.env_config import EnvConfig
+from comfyenv.env_config import EnvConfig, JsonParser
 from comfyenv.args import get_args
 from comfyenv.create import create_update_env
 from comfyenv.activate import activate_env
@@ -15,9 +16,12 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 
 def get_config(args, config_path=None):
+    default_config_path = ROOT_DIR / 'config.json'
+    default_config = EnvConfig.load(default_config_path)
+
     _loaded_default_config = False
     if config_path is None:
-        config_path = ROOT_DIR / 'config.json'
+        config_path = default_config_path
         _loaded_default_config = True
 
     config = EnvConfig.load(config_path)
@@ -29,15 +33,19 @@ def get_config(args, config_path=None):
         config["COMFYENV_ROOT"] = str(ROOT_DIR)
         config["conda_env_name"] = args.get("conda_env_name",
                                             config["env_name"])
+    # Get envpref_path from default config always
+    config["envpref_path"] = default_config["envpref_path"]
     return config
 
 
 def find_config(args):
-    config_path = ROOT_DIR / "envs" / args['env_name'] / "config.json"
-    if not config_path.exists():
+    default_config = EnvConfig.load(ROOT_DIR / 'config.json')
+    default_config["COMFYENV_ROOT"] = str(ROOT_DIR)
+    envpref = JsonParser.load(default_config["envpref_path"])
+    if args["env_name"] not in envpref:
         raise IOError(f'Error: could not find the environment: '
                       f'{args["env_name"]}')
-    return config_path
+    return envpref[args["env_name"]]
 
 
 def main():
@@ -61,7 +69,8 @@ def main():
             remove_env(get_config(args=args))
 
     except Exception as e:
-        print(f'Error: {str(e)}', flush=True)
+        #print(f'Error: {str(e)}', flush=True)
+        traceback.print_exception(e)
         ret = 1
     return ret
 

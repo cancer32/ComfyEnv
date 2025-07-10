@@ -79,3 +79,7 @@ def create_update_env(config):
         # Savning env config
         config['env_created'] = True
         config.dump(config['env_config_path'])
+        # Put env in envpref file
+        envpref = JsonParser.load(config["envpref_path"])
+        envpref[config["env_name"]] = config['env_config_path']
+        envpref.dump()

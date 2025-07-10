@@ -21,6 +21,7 @@
     "env_dir": "${envs_root}/${env_name}",
     "user_dir": "${user_root}/${env_name}",
     "comfyui_root": "${env_dir}",
+    "envpref_path": "${comfyenv_root}/envpref.json",
     "models_dir": "${comfyenv_root}/${models_dir_name}",
     "extra_model_paths_config_path": "${env_dir}/${extra_model_paths_config}",
     "temp_dir": "${TEMP}/${USERNAME}_${env_name}",
