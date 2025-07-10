@@ -33,7 +33,6 @@ def main(args):
         f'--extra-model-paths-config \"{config["extra_model_paths_config_path"]}\" '
         f'--user-directory \"{config["user_dir"]}\" '
         f'--enable-cors-header '
-        f'--disable-auto-launch '
         f'--listen '
     )
     comfyui_args = list(config["comfyui_args"])
