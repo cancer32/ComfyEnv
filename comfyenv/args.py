@@ -10,6 +10,8 @@ def get_args():
     # comfyenv list
     list_parser = subparsers.add_parser("list",
                                         help="List all the environments")
+    list_parser.add_argument("-j", "--json", action="store_true",
+                             help="Output list of environments in json format")
 
     # comfyenv create <env-name> --python=3.10
     create_parser = subparsers.add_parser("create",

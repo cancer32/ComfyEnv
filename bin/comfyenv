@@ -2,7 +2,7 @@
 
 # If CONDA_ROOT is already set, keep it
 if [ -z "$CONDA_ROOT" ]; then
-    echo "CONDA_ROOT not set. Attempting to detect Conda..."
+    # echo "CONDA_ROOT not set. Attempting to detect Conda..."
 
     # Try using `which conda`
     CONDA_PATH=$(which conda 2>/dev/null)
@@ -12,14 +12,14 @@ if [ -z "$CONDA_ROOT" ]; then
         CONDA_PATH=$(realpath "$CONDA_PATH")
         CONDA_ROOT=$(dirname "$(dirname "$CONDA_PATH")")
         export CONDA_ROOT
-        echo "Detected CONDA_ROOT: $CONDA_ROOT"
+        # echo "Detected CONDA_ROOT: $CONDA_ROOT"
     else
         # Fallback common paths
         for path in "$HOME/miniconda3" "$HOME/anaconda3" "/opt/conda" "/usr/local/miniconda3"; do
             if [ -x "$path/bin/conda" ]; then
                 CONDA_ROOT="$path"
                 export CONDA_ROOT
-                echo "Found CONDA_ROOT at fallback path: $CONDA_ROOT"
+                # echo "Found CONDA_ROOT at fallback path: $CONDA_ROOT"
                 break
             fi
         done
