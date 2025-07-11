@@ -40,24 +40,25 @@ pip install -r requirements.txt
 
 ### ⚠️ Set Environment Variable
 
-- Set the `CONDA_ROOT` environment variable to the Root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the startup profile
-- **OR** edit the `bin/_conda_root[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save
+- Set the `CONDA_ROOT` environment variable to the root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the user's startup profile
+- **OR** edit the `bin/_conda_root[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save.
+
   **Windows** `bin/_conda_root.bat`
 
   ```bat
-    REM ##########################################
-    REM Uncomment and set CONDA_ROOT path below
-    set CONDA_ROOT=/path/to/miniconda3
-    REM ##########################################
+  REM ##########################################
+  REM Uncomment and set CONDA_ROOT path below
+  set CONDA_ROOT=/path/to/miniconda3
+  REM ##########################################
   ```
 
   **Linux** `bin/_conda_root`
 
   ```bash
-    ##########################################
-    # Uncomment and set CONDA_ROOT path below
-    export CONDA_ROOT=/path/to/miniconda3
-    ##########################################
+  ##########################################
+  # Uncomment and set CONDA_ROOT path below
+  export CONDA_ROOT=/path/to/miniconda3
+  ##########################################
   ```
 
 ---
