@@ -35,6 +35,14 @@ def get_args():
     update_parser.add_argument("-n", "--name", required=True, dest="env_name",
                                help="Name of the environment to create")
 
+    # comfyenv config -n <env-name>
+    config_parser = subparsers.add_parser("config",
+                                          help="Get/Set the config of the given environment")
+    config_parser.add_argument("-n", "--name", required=True, dest="env_name",
+                               help="Name of the environment")
+    config_parser.add_argument("-e", "--edit", action="store_true",
+                               help="Open the config file to edit")
+
     # comfyenv remove -n <env-name>
     remove_parser = subparsers.add_parser("remove",
                                           help="Remove the given environment data")

@@ -104,6 +104,6 @@ bin/comfyenv stop -n my-env
 - [X] Remove environment
 - [X] Update environment
 - [X] Activate env for manual dependency installation
-- [ ] **Add a env_location.json file to keep track of environments created**
+- [X] Add a env_location.json file to keep track of environments created
 - [ ] **Add config command to open the config of the env**
 - [ ] **GUI or tray icon for quick switching** (optional)

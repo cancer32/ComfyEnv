@@ -1,11 +1,14 @@
 import os
-import sys
 import platform
 import shutil
 
 
+def get_platform():
+    return platform.system()
+
+
 def get_user_shell():
-    system = platform.system()
+    system = get_platform()
 
     if system == 'Windows':
         # Try to get COMSPEC (usually cmd.exe), fallback to powershell

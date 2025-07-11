@@ -10,7 +10,8 @@ from .env_config import JsonParser
 def remove_env(config):
     env_dir = Path(config["env_dir"])
     if not env_dir.exists():
-        raise ValueError(f'Could not find environment "{config["env_name"]}"')
+        raise ValueError(f'Could not find comfyui environment: '
+                         f'"{config["env_name"]}"')
 
     if not config["yes"]:
         ans = input(f'Are you sure want to remove '

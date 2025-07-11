@@ -3,7 +3,7 @@ import traceback
 from tempfile import gettempdir
 from pathlib import Path
 
-from comfyenv.env_config import EnvConfig, JsonParser
+from comfyenv.env_config import EnvConfig, JsonParser, manage_config
 from comfyenv.args import get_args
 from comfyenv.create import create_update_env
 from comfyenv.activate import activate_env
@@ -43,8 +43,8 @@ def find_config(args):
     default_config["COMFYENV_ROOT"] = str(ROOT_DIR)
     envpref = JsonParser.load(default_config["envpref_path"])
     if args["env_name"] not in envpref:
-        raise IOError(f'Error: could not find the environment: '
-                      f'{args["env_name"]}')
+        raise ValueError(f'Could not find comfyui environment: '
+                         f'"{args["env_name"]}"')
     return envpref[args["env_name"]]
 
 
@@ -55,8 +55,8 @@ def main():
         if args['command'] == "create":
             create_update_env(get_config(args=args))
         elif args['command'] == "update":
-            create_update_env(
-                get_config(args=args, config_path=find_config(args)))
+            create_update_env(get_config(args=args,
+                                         config_path=find_config(args)))
         elif args['command'] == "activate":
             activate_env(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "stop":
@@ -65,11 +65,14 @@ def main():
             run_comfyui(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "list":
             list_envs(get_config(args=args))
+        elif args['command'] == "config":
+            manage_config(get_config(args=args))
         elif args['command'] == "remove":
             remove_env(get_config(args=args))
-
+    except ValueError as e:
+        print(f'Error: {str(e)}', flush=True)
+        ret = 1
     except Exception as e:
-        #print(f'Error: {str(e)}', flush=True)
         traceback.print_exception(e)
         ret = 1
     return ret

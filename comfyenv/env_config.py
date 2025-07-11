@@ -1,7 +1,10 @@
 import os
 import re
 import json
+import subprocess
 from typing import Any, Dict, AnyStr
+
+from .common import get_platform
 
 
 class JsonParser(dict):
@@ -56,7 +59,7 @@ class JsonParser(dict):
             os.makedirs(base_dir)
 
         with open(self.file_path, 'w') as f:
-            json.dump(self, f)
+            json.dump(self, f, indent=4)
 
     def dumps(self):
         """Exports the instance data to json string
@@ -64,7 +67,7 @@ class JsonParser(dict):
         :return: Json string data
         :rtype: str
         """
-        return json.dumps(self)
+        return json.dumps(self, indent=4)
 
 
 class EnvConfig(JsonParser):
@@ -112,3 +115,31 @@ class EnvConfig(JsonParser):
 
     def __getitem__(self, key: str) -> Any:
         return self.get_value(key)
+
+
+def manage_config(config):
+    """Get/Set config of the environment
+
+    :param config: Config of the environment
+    :type config: EnvConfig
+    """
+    envs = JsonParser.load(config["envpref_path"])
+    try:
+        config_path = envs[config["env_name"]]
+    except KeyError:
+        raise ValueError(f'Could not find comfyui environment: '
+                         f'"{config["env_name"]}"')
+
+    if config['edit']:
+        system = get_platform()
+
+        cmd = ['start', config_path]
+        if system == 'Linux':
+            cmd = ['xdg-open', config_path]
+        elif system == 'Darwin':  # macOS
+            cmd = ['open', config_path]
+        # Open config file in text editor
+        subprocess.Popen(cmd, shell=True)
+        return
+
+    print(config.dumps(), flush=True)
