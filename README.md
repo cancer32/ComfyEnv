@@ -24,7 +24,7 @@ ComfyUI is incredibly flexible, but installing different custom nodes or depende
 
 Before using ComfyEnv, make sure the following are installed:
 
-- [Miniconda3](https://docs.conda.io/en/latest/miniconda.html)
+- [Miniconda3](https://www.anaconda.com/download/success)
 - [Git](https://git-scm.com/)
 
 ---
@@ -38,18 +38,15 @@ cd ComfyEnv
 pip install -r requirements.txt
 ```
 
----
+### Set Environment Variable
 
-## Environment Variables
-> ⚠️ Set the `CONDA_ROOT` environment variable manually.
-
-| Variable     | Description                              | Example                     |
-| ------------ | ---------------------------------------- | --------------------------- |
-| `CONDA_ROOT` | Root path of your Miniconda installation | `C:\ProgramData\miniconda3` |
+> ⚠️ Set the `CONDA_ROOT`
+> Set the **CONDA_ROOT** environment variable to the Root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the startup profile
+> OR Edit the **\_conda_root[.bat]** and set the CONDA_ROOT path in it and save
 
 ---
 
-### Directory Structure
+## Directory Structure
 
 ```
 ComfyEnv/
@@ -62,6 +59,7 @@ ComfyEnv/
 │   └── vae/
 │   └── .../
 ```
+
 ---
 
 ## Usage
@@ -71,8 +69,8 @@ ComfyEnv/
 ```bash
 bin/comfyenv create my-env --python=3.12 --comfyui-version=v0.3.43
 ```
-> Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment 
 
+> Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment
 
 ### List all environments
 
@@ -101,9 +99,9 @@ bin/comfyenv stop -n my-env
 - [x] List environments
 - [x] Run ComfyUI from environment
 - [x] Stop ComfyUI
-- [X] Remove environment
-- [X] Update environment
-- [X] Activate env for manual dependency installation
-- [X] Add a env_location.json file to keep track of environments created
-- [ ] **Add config command to open the config of the env**
+- [x] Remove environment
+- [x] Update environment
+- [x] Activate env for manual dependency installation
+- [x] Add a env_location.json file to keep track of environments created
+- [x] Add config command to open the config of the env
 - [ ] **GUI or tray icon for quick switching** (optional)

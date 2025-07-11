@@ -1,37 +1,7 @@
 #!/bin/bash
 
-# If CONDA_ROOT is already set, keep it
-if [ -z "$CONDA_ROOT" ]; then
-    # echo "CONDA_ROOT not set. Attempting to detect Conda..."
+BIN_DIR=$(dirname $(realpath $0))
+export PATH="${BIN_DIR}:${PATH}"
+source _conda_root
 
-    # Try using `which conda`
-    CONDA_PATH=$(which conda 2>/dev/null)
-
-    if [ -n "$CONDA_PATH" ]; then
-        # Resolve the full path to Conda
-        CONDA_PATH=$(realpath "$CONDA_PATH")
-        CONDA_ROOT=$(dirname "$(dirname "$CONDA_PATH")")
-        export CONDA_ROOT
-        # echo "Detected CONDA_ROOT: $CONDA_ROOT"
-    else
-        # Fallback common paths
-        for path in "$HOME/miniconda3" "$HOME/anaconda3" "/opt/conda" "/usr/local/miniconda3"; do
-            if [ -x "$path/bin/conda" ]; then
-                CONDA_ROOT="$path"
-                export CONDA_ROOT
-                # echo "Found CONDA_ROOT at fallback path: $CONDA_ROOT"
-                break
-            fi
-        done
-
-        # If still not found
-        if [ -z "$CONDA_ROOT" ]; then
-            echo "Error: Conda not found. Please install Conda or set CONDA_ROOT manually."
-            exit 1
-        fi
-    fi
-fi
-
-CURRENT_DIR=$(dirname $(realpath $0))
-export PATH="${CURRENT_DIR}:$CONDA_ROOT/bin:${PATH}"
-$CONDA_ROOT/bin/python $CURRENT_DIR/../main.py "$@"
+$CONDA_ROOT/bin/python $BIN_DIR/../main.py "$@"

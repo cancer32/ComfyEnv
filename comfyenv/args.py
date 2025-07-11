@@ -19,7 +19,7 @@ def get_args():
     create_parser.add_argument("-n", "--name", required=True,
                                dest="env_name", help="Name of the environment to create")
     create_parser.add_argument("--python",
-                               help="Python version for the environment (e.g., 3.10)")
+                               help="Python version for the environment (e.g., 3.12.*)")
     create_parser.add_argument("--user-root",
                                help="Custom user root directory path")
     create_parser.add_argument("--envs-root",
@@ -65,7 +65,7 @@ def get_args():
 
     # comfyenv run -n <env-name> -- <comfyui args>
     run_parser = subparsers.add_parser("run",
-                                       help="Run ComfyUI inside a specific environment")
+                                       help="Run ComfyUI from an environment")
     run_parser.add_argument("-n", "--name", required=True, dest="env_name",
                             help="Name of the environment to run")
     run_parser.add_argument("comfyui_args", nargs=argparse.REMAINDER,
