@@ -41,7 +41,7 @@ for %%P in (%POSSIBLE_PATHS%) do (
     set BIN_DIR=%~dp0
     set PATH=%BIN_DIR%;%CONDA_ROOT%/condabin;%PATH%
     %CONDA_ROOT%/python.exe %BIN_DIR%/../main.py %*
-    goto :eof
+    exit /b %ERRORLEVEL%
 
 echo Error: Conda not found. Please install Conda or set CONDA_ROOT manually.
 exit /b 1
