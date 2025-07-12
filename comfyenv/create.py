@@ -48,18 +48,21 @@ def create_update_env(config):
     run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
                 f'pip install {torch_dep}',
                 shell=True)
+
     # Pulling comfyui
     comfyui_root = Path(config["comfyui_root"])
     if (comfyui_root / ".git").exists():
-        run_command(f'git checkout master && git pull',
-                    shell=True, cwd=comfyui_root)
+        cmd = 'git stash && '
+        cmd += 'git checkout master && '
+        cmd += 'git pull && '
+        if config["comfyui_version"] != "latest":
+            cmd += f'git checkout tags/{config["comfyui_version"]} &&'
+        cmd += 'git stash pop'
+        run_command(cmd, shell=True, cwd=comfyui_root)
     else:
         run_command(f'git clone "https://github.com/comfyanonymous/ComfyUI.git" '
                     f'"{comfyui_root}"',
                     shell=True)
-    if config["comfyui_version"] != "latest":
-        run_command(f'git checkout tags/{config["comfyui_version"]}',
-                    shell=True, cwd=comfyui_root)
 
     # Installing comfyui's requirements.txt
     run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
