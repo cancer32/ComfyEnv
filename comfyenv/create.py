@@ -7,10 +7,10 @@ from .torch_cuda import get_pytorch_cuda
 from .common import copy_extra_model_config
 
 
-def run_command(cmd, **kwargs):
+def run_command(cmd, raise_error=True, **kwargs):
     process = subprocess.Popen(cmd, **kwargs)
     process.communicate()  # wait for the process to finish
-    if process.returncode != 0:
+    if raise_error and process.returncode != 0:
         raise subprocess.CalledProcessError(
             process.returncode, cmd
         )
@@ -52,13 +52,13 @@ def create_update_env(config):
     # Pulling comfyui
     comfyui_root = Path(config["comfyui_root"])
     if (comfyui_root / ".git").exists():
-        cmd = 'git stash && '
-        cmd += 'git checkout master && '
-        cmd += 'git pull && '
+        cmd = 'git stash'
+        cmd += ' && git checkout master'
+        cmd += ' && git pull'
         if config["comfyui_version"] != "latest":
-            cmd += f'git checkout tags/{config["comfyui_version"]} &&'
-        cmd += 'git stash pop'
+            cmd += f' && git checkout tags/{config["comfyui_version"]}'
         run_command(cmd, shell=True, cwd=comfyui_root)
+        run_command('git stash pop', raise_error=False, shell=True, cwd=comfyui_root)
     else:
         run_command(f'git clone "https://github.com/comfyanonymous/ComfyUI.git" '
                     f'"{comfyui_root}"',
