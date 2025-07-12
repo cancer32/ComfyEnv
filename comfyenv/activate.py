@@ -4,11 +4,10 @@ from .common import get_user_shell
 
 
 def activate_env(config):
-    print(f'Activating environment {config["env_name"]}')
+    print(f'Activating environment {config["conda_env_name"]}')
     shell = get_user_shell()
     if 'cmd.exe' in shell.lower():
-        subprocess.run(f'{shell} /K conda activate {config["env_name"]}',
-                       shell=True,
+        subprocess.run(f'{shell} /K conda activate {config["conda_env_name"]}',
                        cwd=config["env_dir"])
     elif 'bash' in shell.lower():
         bash_script = f'''
@@ -17,5 +16,4 @@ def activate_env(config):
         exec {shell} --noprofile --norc;
         '''
         subprocess.run(f'{shell} -i -c "{bash_script}"',
-                       shell=True,
                        cwd=config["env_dir"])
