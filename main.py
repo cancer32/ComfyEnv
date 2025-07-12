@@ -68,7 +68,7 @@ def main():
         elif args['command'] == "list":
             list_envs(get_config(args=args))
         elif args['command'] == "config":
-            manage_config(get_config(args=args))
+            manage_config(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "remove":
             remove_env(get_config(args=args))
     except (NoEnvFoundError, NoProcessFoundError,

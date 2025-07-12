@@ -36,10 +36,7 @@ def main(args):
         f'--enable-cors-header '
         f'--listen '
     )
-    comfyui_args = list(config["comfyui_args"])
-    if '--' in comfyui_args:
-        comfyui_args.remove('--')
-    sys.argv = new_args + comfyui_args
+    sys.argv = new_args + config["comfyui_args"]
 
     ret = 0
     with open(main_py) as f:
