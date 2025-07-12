@@ -4,6 +4,7 @@ import shlex
 
 from comfyenv.env_config import EnvConfig
 from comfyenv.common import create_pid, remove_pid
+from comfyenv.exceptions import AlreadyRunningError
 
 
 def main(args):
@@ -21,7 +22,7 @@ def main(args):
 
     try:
         create_pid(pid_path, port)
-    except RuntimeError as e:
+    except AlreadyRunningError as e:
         print('Error: %s' % str(e), flush=True)
         return 1
 
