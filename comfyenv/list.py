@@ -1,11 +1,11 @@
 import json
 from pathlib import Path
 
-from .env_config import JsonParser
+from .env_config import get_envpref
 
 
 def list_envs(config):
-    envs = JsonParser.load(config["envpref_path"])
+    envs = get_envpref(config["envpref_path"])
     if config["json"]:
         print(json.dumps(envs), flush=True)
         return

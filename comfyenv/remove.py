@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 
 from .common import get_user_shell
-from .env_config import JsonParser
+from .env_config import get_envpref
 from .exceptions import NoEnvFoundError
 
 
@@ -32,7 +32,7 @@ def remove_env(config):
         shutil.rmtree(env_dir)
 
     # Remove env from envpref file
-    envpref = JsonParser.load(config["envpref_path"])
+    envpref = get_envpref(config["envpref_path"])
     envpref.pop(config["env_name"])
     envpref.dump()
     print("Done", flush=True)

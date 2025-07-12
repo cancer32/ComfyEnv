@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import subprocess
 
-from .env_config import JsonParser
+from .env_config import JsonParser, get_envpref
 from .torch_cuda import get_pytorch_cuda
 from .common import copy_extra_model_config
 
@@ -92,6 +92,6 @@ def create_update_env(config):
         config['env_created'] = True
         config.dump(config['env_config_path'])
         # Put env in envpref file
-        envpref = JsonParser.load(config["envpref_path"])
+        envpref = get_envpref(config["envpref_path"])
         envpref[config["env_name"]] = config['env_config_path']
         envpref.dump()

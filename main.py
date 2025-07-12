@@ -5,7 +5,7 @@ from pathlib import Path
 
 from comfyenv.exceptions import (NoEnvFoundError, NoProcessFoundError,
                                  AlreadyRunningError)
-from comfyenv.env_config import EnvConfig, JsonParser, manage_config
+from comfyenv.env_config import EnvConfig, manage_config, get_envpref
 from comfyenv.args import get_args
 from comfyenv.create import create_update_env
 from comfyenv.activate import activate_env
@@ -43,7 +43,7 @@ def get_config(args, config_path=None):
 def find_config(args):
     default_config = EnvConfig.load(ROOT_DIR / 'config.json')
     default_config["COMFYENV_ROOT"] = str(ROOT_DIR)
-    envpref = JsonParser.load(default_config["envpref_path"])
+    envpref = get_envpref(default_config["envpref_path"])
     if args["env_name"] not in envpref:
         raise NoEnvFoundError(f'Could not find comfyui environment: '
                               f'"{args["env_name"]}"')

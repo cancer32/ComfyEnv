@@ -2,6 +2,7 @@ import os
 import re
 import json
 import subprocess
+from pathlib import Path
 from typing import Any, Dict, AnyStr
 
 from .common import get_platform
@@ -118,18 +119,27 @@ class EnvConfig(JsonParser):
         return self.get_value(key)
 
 
+def get_envpref(envpref_path):
+    envpref_path = Path(envpref_path)
+    if envpref_path.exists():
+        return JsonParser.load(envpref_path)
+    envpref = JsonParser({})
+    envpref.dump(envpref_path)
+    return envpref
+
+
 def manage_config(config):
     """Get/Set config of the environment
 
     :param config: Config of the environment
     :type config: EnvConfig
     """
-    envs = JsonParser.load(config["envpref_path"])
+    envs = get_envpref(config["envpref_path"])
     try:
         config_path = envs[config["env_name"]]
     except KeyError:
         raise NoEnvFoundError(f'Could not find comfyui environment: '
-                         f'"{config["env_name"]}"')
+                              f'"{config["env_name"]}"')
 
     if config['edit']:
         system = get_platform()
