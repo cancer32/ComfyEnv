@@ -5,6 +5,7 @@ import subprocess
 from typing import Any, Dict, AnyStr
 
 from .common import get_platform
+from .exceptions import NoEnvFoundError
 
 
 class JsonParser(dict):
@@ -127,7 +128,7 @@ def manage_config(config):
     try:
         config_path = envs[config["env_name"]]
     except KeyError:
-        raise ValueError(f'Could not find comfyui environment: '
+        raise NoEnvFoundError(f'Could not find comfyui environment: '
                          f'"{config["env_name"]}"')
 
     if config['edit']:

@@ -3,6 +3,8 @@ import traceback
 from tempfile import gettempdir
 from pathlib import Path
 
+from comfyenv.exceptions import (NoEnvFoundError, NoProcessFoundError,
+                                 AlreadyRunningError)
 from comfyenv.env_config import EnvConfig, JsonParser, manage_config
 from comfyenv.args import get_args
 from comfyenv.create import create_update_env
@@ -43,8 +45,8 @@ def find_config(args):
     default_config["COMFYENV_ROOT"] = str(ROOT_DIR)
     envpref = JsonParser.load(default_config["envpref_path"])
     if args["env_name"] not in envpref:
-        raise ValueError(f'Could not find comfyui environment: '
-                         f'"{args["env_name"]}"')
+        raise NoEnvFoundError(f'Could not find comfyui environment: '
+                              f'"{args["env_name"]}"')
     return envpref[args["env_name"]]
 
 
@@ -69,7 +71,8 @@ def main():
             manage_config(get_config(args=args))
         elif args['command'] == "remove":
             remove_env(get_config(args=args))
-    except ValueError as e:
+    except (NoEnvFoundError, NoProcessFoundError,
+            AlreadyRunningError, ValueError) as e:
         print(f'Error: {str(e)}', flush=True)
         ret = 1
     except Exception as e:
