@@ -58,18 +58,49 @@ class CreateEnvDialog(QDialog):
         self.name_input.setMaxLength(16)
         self.name_input.setValidator(QRegularExpressionValidator(
             QRegularExpression(r"^[a-zA-Z0-9_-]+$")))
+        self.name_input.setToolTip(
+            "Name of the environment."
+            "\nAllowed: letters, numbers, '_' and '-', max 16 characters."
+        )
+
         self.python_input = labeled_input("Python Version (default: 3.12.*):")
         self.python_input.setValidator(QRegularExpressionValidator(
             QRegularExpression(r"^[0-9.*]+$")))
+        self.python_input.setToolTip(
+            "Specify Python version (e.g., 3.10, 3.12.*)."
+            "\nLeave blank for default."
+        )
+
         self.comfyui_version_input = labeled_input(
             "ComfyUI Version (optional):")
         self.comfyui_version_input.setValidator(QRegularExpressionValidator(
             QRegularExpression(r"^v[0-9.]+$")))
+        self.comfyui_version_input.setToolTip(
+            "Specify a ComfyUI version tag (e.g., v0.3.40)."
+            "\nLeave blank to use latest."
+        )
 
+        self.conda_env_input = labeled_input(
+            "Conda Environment Name (optional):")
+        self.conda_env_input.setMaxLength(16)
+        self.conda_env_input.setValidator(QRegularExpressionValidator(
+            QRegularExpression(r"^[a-zA-Z0-9_-]+$")))
+        self.conda_env_input.setToolTip(
+            "Give an existing Conda environment name OR"
+            "\nIf left blank, a new Conda environment will be created with the same name as this environment."
+        )
         self.user_root_input = labeled_input("User Root Path (optional):",
                                              browseable=True)
+        self.user_root_input.setToolTip(
+            "Root directory to store user files of the environments such as input images, outputs, and logs."
+            "\nLeave blank to use default."
+        )
         self.envs_root_input = labeled_input("Envs Root Path (optional):",
                                              browseable=True)
+        self.envs_root_input.setToolTip(
+            "Root folder where ComfyUI environments will be created."
+            "\nUseful for managing multiple isolated setups."
+        )
 
         btn_row = QHBoxLayout()
         self.ok_btn = QPushButton("Create")
