@@ -71,5 +71,9 @@ def get_args():
     run_parser.add_argument("comfyui_args", nargs=argparse.REMAINDER,
                             help="Additional arguments passed to ComfyUI")
 
+    # comfyenv version
+    version_parser = subparsers.add_parser("version",
+                                           help="Print the comfyenv version")
+
     args = parser.parse_args().__dict__
     return dict((k, v) for k, v in args.items() if v not in (None, []))

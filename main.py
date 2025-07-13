@@ -12,6 +12,7 @@ from comfyenv.activate import activate_env
 from comfyenv.run import run_comfyui, stop_comfyui
 from comfyenv.list import list_envs
 from comfyenv.remove import remove_env
+from comfyenv.version import __version__
 
 # Variables
 ROOT_DIR = Path(__file__).resolve().parent
@@ -71,6 +72,8 @@ def main():
             manage_config(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "remove":
             remove_env(get_config(args=args))
+        elif args['command'] == "version":
+            print(__version__, flush=True)
     except (NoEnvFoundError, NoProcessFoundError,
             AlreadyRunningError, ValueError) as e:
         print(f'Error: {str(e)}', flush=True)
