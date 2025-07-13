@@ -66,8 +66,7 @@ def create_update_env(config):
 
     # Installing comfyui's requirements.txt
     run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
-                f'pip install '
-                f'-r "{config["comfyenv_root"]}/requirements.txt" '
+                f'pip install psutil==7.0.0 '
                 f'-r "{config["comfyui_root"]}/requirements.txt" ',
                 shell=True)
 

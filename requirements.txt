@@ -1,1 +1,2 @@
-psutil
+psutil==7.0.0
+PySide6
