@@ -100,19 +100,3 @@ bin/comfy-env run -n my-env -- [comfyui args]
 # Stop ComfyUI running in an environment
 bin/comfy-env stop -n my-env
 ```
-
----
-
-## TODO
-
-- [x] Project structure
-- [x] Create environment
-- [x] List environments
-- [x] Run ComfyUI from environment
-- [x] Stop ComfyUI
-- [x] Remove environment
-- [x] Update environment
-- [x] Activate env for manual dependency installation
-- [x] Add a env_location.json file to keep track of environments created
-- [x] Add config command to open the config of the env
-- [X] **GUI or tray icon for quick switching** (optional)
