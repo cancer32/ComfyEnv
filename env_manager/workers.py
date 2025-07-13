@@ -1,4 +1,4 @@
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import QThread, Signal
 
 
 class SubprocessWorker(QThread):

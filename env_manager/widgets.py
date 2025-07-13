@@ -7,9 +7,8 @@ import re
 import webbrowser
 
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit,
-    QListWidget, QListWidgetItem, QHBoxLayout, QMessageBox, QToolButton, QSizePolicy,
-    QTextEdit, QDialog, QInputDialog
+    QWidget, QLabel, QHBoxLayout, QMessageBox, QToolButton,
+    QSizePolicy, QInputDialog
 )
 
 from .dialogs import ConsoleWindow

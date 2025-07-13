@@ -1,10 +1,12 @@
 import platform
 
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit,
-    QListWidget, QListWidgetItem, QHBoxLayout, QMessageBox, QToolButton, QSizePolicy,
-    QTextEdit, QDialog
+    QVBoxLayout, QLabel, QPushButton, QLineEdit,
+    QHBoxLayout, QMessageBox, QToolButton,
+    QTextEdit, QDialog, QFileDialog
 )
+from PySide6.QtGui import QRegularExpressionValidator
+from PySide6.QtCore import QRegularExpression
 
 from .workers import SubprocessWorker
 
@@ -17,19 +19,57 @@ class CreateEnvDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        def labeled_input(label_text):
+        def labeled_input(label_text, browseable=False):
             layout.addWidget(QLabel(label_text))
+
+            hbox = QHBoxLayout()
             line_edit = QLineEdit()
-            layout.addWidget(line_edit)
+            hbox.addWidget(line_edit)
+
+            if browseable:
+                line_edit.setReadOnly(True)
+
+                browse_btn = QToolButton()
+                browse_btn.setText("📂")
+                browse_btn.setToolTip("Browse")
+                hbox.addWidget(browse_btn)
+
+                clear_btn = QToolButton()
+                clear_btn.setText("❌")
+                clear_btn.setToolTip("Clear")
+                hbox.addWidget(clear_btn)
+
+                def open_dialog():
+                    path = QFileDialog.getExistingDirectory(
+                        self, "Select Folder")
+                    if path:
+                        line_edit.setText(path)
+
+                def clear_field():
+                    line_edit.clear()
+
+                browse_btn.clicked.connect(open_dialog)
+                clear_btn.clicked.connect(clear_field)
+
+            layout.addLayout(hbox)
             return line_edit
 
         self.name_input = labeled_input("Environment Name (required):")
+        self.name_input.setMaxLength(16)
+        self.name_input.setValidator(QRegularExpressionValidator(
+            QRegularExpression(r"^[a-zA-Z0-9_-]+$")))
         self.python_input = labeled_input("Python Version (default: 3.12.*):")
+        self.python_input.setValidator(QRegularExpressionValidator(
+            QRegularExpression(r"^[0-9.*]+$")))
         self.comfyui_version_input = labeled_input(
             "ComfyUI Version (optional):")
-        self.user_root_input = labeled_input("User Root Path (optional):")
-        self.envs_root_input = labeled_input("Envs Root Path (optional):")
-        self.conda_env_input = labeled_input("Conda Env Name (optional):")
+        self.comfyui_version_input.setValidator(QRegularExpressionValidator(
+            QRegularExpression(r"^v[0-9.]+$")))
+
+        self.user_root_input = labeled_input("User Root Path (optional):",
+                                             browseable=True)
+        self.envs_root_input = labeled_input("Envs Root Path (optional):",
+                                             browseable=True)
 
         btn_row = QHBoxLayout()
         self.ok_btn = QPushButton("Create")

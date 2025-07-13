@@ -4,9 +4,8 @@ import platform
 import subprocess
 
 from PySide6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit,
-    QListWidget, QListWidgetItem, QHBoxLayout, QMessageBox, QToolButton, QSizePolicy,
-    QTextEdit, QDialog
+    QWidget, QVBoxLayout, QLabel, QPushButton, QDialog,
+    QListWidget, QListWidgetItem, QHBoxLayout, QMessageBox,
 )
 
 from .dialogs import ConsoleWindow, CreateEnvDialog
