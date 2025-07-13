@@ -84,7 +84,7 @@ ComfyEnv/
 ### Create a new environment
 
 ```bash
-bin/comfyenv create my-env --python=3.12 --comfyui-version=v0.3.43
+bin/comfyenv create -n my-env --python=3.12 --comfyui-version=v0.3.43
 ```
 
 > Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment
