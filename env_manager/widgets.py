@@ -36,7 +36,7 @@ class EnvItemWidget(QWidget):
         self.open_btn.clicked.connect(self.open_browser)
 
         self.run_btn = QToolButton()
-        self.run_btn.setText("▶️")
+        self.run_btn.setText("🚀")
         self.run_btn.setMinimumSize(34, 34)
         self.run_btn.setToolTip("Run ComfyUI")
         self.run_btn.clicked.connect(self.run)
@@ -162,7 +162,7 @@ class EnvItemWidget(QWidget):
         # Disable relevant buttons
         self.mark_running()
 
-        def on_process_finished(code):
+        def on_process_finished(exit_code):
             self.mark_running()
             if self.env_name in self.parent_gui.running_processes:
                 del self.parent_gui.running_processes[self.env_name]
@@ -189,7 +189,7 @@ class EnvItemWidget(QWidget):
         console = ConsoleWindow(self.env_name, process, self)
         console.show()
 
-        def on_process_finished(code):
+        def on_process_finished(exit_code):
             if self.env_name in self.parent_gui.running_processes:
                 del self.parent_gui.running_processes[self.env_name]
         console.worker.finished.connect(on_process_finished)
@@ -262,14 +262,16 @@ class EnvItemWidget(QWidget):
             return
 
         self.mark_processing(True, icon="🔄")
-        def on_process_finished(code):
+
+        def on_process_finished(exit_code):
             self.mark_processing(False)
 
         self.parent_gui.run_in_console(
             f"comfy-env update -n {self.env_name}",
             title=f"Updating {self.env_name}",
             refresh_after=True,
-            callback=on_process_finished
+            callback=on_process_finished,
+            stop_button=True
         )
 
     def delete_env(self):
@@ -281,7 +283,8 @@ class EnvItemWidget(QWidget):
             return
 
         self.mark_processing(True, icon="🗑️")
-        def on_process_finished(code):
+
+        def on_process_finished(exit_code):
             self.mark_processing(False)
 
         self.parent_gui.run_in_console(

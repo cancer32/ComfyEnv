@@ -1,5 +1,6 @@
-import sys
+import os
 import json
+import platform
 import subprocess
 
 from PySide6.QtWidgets import (
@@ -42,15 +43,22 @@ class EnvManagerGUI(QWidget):
     def connect_signals(self):
         self.create_button.clicked.connect(self.create_env)
 
-    def run_in_console(self, command, title="Command", refresh_after=False, callback=None):
+    def run_in_console(self, command, title="Command", refresh_after=False,
+                       callback=None, stop_button=None):
+        platform_ = platform.system()
+        group_args = ({"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP} if platform_ == "Windows" else
+                      {"preexec_fn": os.setsid} if platform_ == "Linux" else
+                      {})
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            shell=True
+            shell=True,
+            **group_args
         )
-        console = ConsoleWindow(title, process, self)
+        console = ConsoleWindow(title, process, parent=self,
+                                stop_button=stop_button)
         if refresh_after:
             console.worker.finished.connect(self.refresh_envs)
         if callback:
@@ -85,12 +93,16 @@ class EnvManagerGUI(QWidget):
 
     def create_env(self):
         dialog = CreateEnvDialog(self)
-        if dialog.exec() == QDialog.Accepted:
-            args = dialog.get_args()
-            if args:
-                command = f"comfy-env create {' '.join(args)}"
-                self.run_in_console(
-                    command, title=f"Creating {args[1]}", refresh_after=True)
+        if dialog.exec() != QDialog.Accepted:
+            return
+        args = dialog.get_args()
+        if not args:
+            return
+
+        command = f"comfy-env create {' '.join(args)}"
+        self.run_in_console(command, title=f"Creating {args[1]}",
+                            refresh_after=True,
+                            stop_button=True)
 
     def closeEvent(self, event):
         if not len(self.running_processes):
@@ -100,7 +112,7 @@ class EnvManagerGUI(QWidget):
         confirm = QMessageBox.question(
             self,
             "Quit",
-            "Some environments are still running.\nDo you want to terminate all and exit?",
+            "Some processes are still running.\nDo you want to terminate all and exit?",
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -108,7 +120,7 @@ class EnvManagerGUI(QWidget):
             event.ignore()
             return
 
-        # Terminate all running processes
+        # Terminate all running comfyui processes
         for i in range(self.env_list.count()):
             item = self.env_list.item(i)
             widget = self.env_list.itemWidget(item)

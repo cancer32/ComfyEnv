@@ -1,3 +1,5 @@
+import platform
+
 from PySide6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QLineEdit,
     QListWidget, QListWidgetItem, QHBoxLayout, QMessageBox, QToolButton, QSizePolicy,
@@ -65,7 +67,7 @@ class CreateEnvDialog(QDialog):
 
 
 class ConsoleWindow(QDialog):
-    def __init__(self, env_name, process, parent=None, close_worker=True):
+    def __init__(self, env_name, process, parent=None, close_worker=True, stop_button=False):
         super().__init__(parent)
         self.setWindowTitle(f"Console - {env_name}")
         self.setMinimumSize(600, 400)
@@ -73,8 +75,18 @@ class ConsoleWindow(QDialog):
         self.output = QTextEdit()
         self.output.setReadOnly(True)
 
+        # Add a Stop button
+        self.stop_button = QPushButton("Stop")
+        self.stop_button.setHidden(not stop_button)
+        self.stop_button.clicked.connect(self.stop_process)
+        # Layout
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+        button_layout.addWidget(self.stop_button)
+
         layout = QVBoxLayout()
         layout.addWidget(self.output)
+        layout.addLayout(button_layout)
         self.setLayout(layout)
 
         self.close_worker = close_worker
@@ -88,6 +100,29 @@ class ConsoleWindow(QDialog):
 
     def on_finished(self, exit_code):
         self.output.append(f"\nProcess exited with code {exit_code}.")
+        self.stop_button.setEnabled(False)  # Disable stop button when done
+
+    def stop_process(self):
+        if not (self.worker and self.worker.process):
+            return
+
+        self.output.append("\nTerminating process...")
+
+        platform_ = platform.system()
+        if platform_ == 'Windows':
+            import subprocess
+            import time
+            self.worker.process.send_signal(subprocess.signal.CTRL_BREAK_EVENT)
+            time.sleep(.5)
+            self.worker.process.send_signal(subprocess.signal.CTRL_BREAK_EVENT)
+            time.sleep(.5)
+            self.worker.process.send_signal(subprocess.signal.CTRL_BREAK_EVENT)
+            time.sleep(.5)
+        elif platform_ == 'Linux':
+            import os
+            import signal
+            os.killpg(os.getpgid(self.worker.process.pid), signal.SIGTERM)
+        self.worker.process.terminate()
 
     def closeEvent(self, event):
         if self.close_worker:
