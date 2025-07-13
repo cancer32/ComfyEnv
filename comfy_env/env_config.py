@@ -144,11 +144,11 @@ def manage_config(config):
     if config['edit']:
         system = get_platform()
 
-        cmd = ['start', config_path]
+        cmd = f'start {config_path}'
         if system == 'Linux':
-            cmd = ['xdg-open', config_path]
+            cmd = f'xdg-open {config_path}'
         elif system == 'Darwin':  # macOS
-            cmd = ['open', config_path]
+            cmd = f'open {config_path}'
         # Open config file in text editor
         subprocess.Popen(cmd, shell=True)
         return
