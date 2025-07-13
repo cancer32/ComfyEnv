@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 
 # Path to your version file (adjust as needed)
-version_file = Path(__file__).parent.parent / "comfyenv" / "version.py"
+version_file = Path(__file__).parent.parent / "comfy_env" / "version.py"
 content = version_file.read_text()
 
 # Extract version from __version__ = "..."

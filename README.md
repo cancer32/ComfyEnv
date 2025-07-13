@@ -68,7 +68,7 @@ pip install -r requirements.txt
 ```
 ComfyEnv/
 ├── bin/
-│   └── comfyenv         # The main CLI script or executable
+│   └── comfy-env         # The main CLI script or executable
 ├── envs/                # Contains all isolated environments
 │   └── <env_name>/      # A specific ComfyUI environment
 ├── models/              # Shared models directory accessible from all environments
@@ -84,7 +84,7 @@ ComfyEnv/
 ### Create a new environment
 
 ```bash
-bin/comfyenv create -n my-env --python=3.12 --comfyui-version=v0.3.43
+bin/comfy-env create -n my-env --python=3.12 --comfyui-version=v0.3.43
 ```
 
 > Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment
@@ -92,19 +92,19 @@ bin/comfyenv create -n my-env --python=3.12 --comfyui-version=v0.3.43
 ### List all environments
 
 ```bash
-bin/comfyenv list
+bin/comfy-env list
 ```
 
 ### Run ComfyUI inside an environment
 
 ```bash
-bin/comfyenv run -n my-env -- [comfyui args]
+bin/comfy-env run -n my-env -- [comfyui args]
 ```
 
 ### Stop ComfyUI running in an environment
 
 ```bash
-bin/comfyenv stop -n my-env
+bin/comfy-env stop -n my-env
 ```
 
 ---

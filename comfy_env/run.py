@@ -1,6 +1,6 @@
 import subprocess
 
-from comfyenv.common import stop_process
+from comfy_env.common import stop_process
 
 
 def run_comfyui(config):
@@ -16,7 +16,7 @@ def run_comfyui(config):
 
     command = (
         f'conda run --live-stream -n {config["conda_env_name"]} '
-        f'python \"{config["comfyenv_root"]}/run_comfy.py\" {config["env_config_path"]}'
+        f'python \"{config["comfyenv_root"]}/comfyui_main.py\" {config["env_config_path"]}'
     )
     subprocess.run(command, shell=True)
 

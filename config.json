@@ -1,7 +1,6 @@
 {
     "python": "3.12.*",
     "comfyui_version": "latest",
-    "comfyui_dir_name": "comfyui",
     "comfyenv_dir_name": "comfyenv",
     "env_dir_name": "envs",
     "env_name": "default",

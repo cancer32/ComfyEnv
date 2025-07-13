@@ -2,9 +2,9 @@ import os
 import sys
 import shlex
 
-from comfyenv.env_config import EnvConfig
-from comfyenv.common import create_pid, remove_pid
-from comfyenv.exceptions import AlreadyRunningError
+from comfy_env.env_config import EnvConfig
+from comfy_env.common import create_pid, remove_pid
+from comfy_env.exceptions import AlreadyRunningError
 
 
 def main(args):

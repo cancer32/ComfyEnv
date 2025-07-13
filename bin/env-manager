@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BIN_DIR=$(dirname $(realpath $0))
+export PATH="${BIN_DIR}:${PATH}"
+source _conda_root
+
+$CONDA_ROOT/bin/python $BIN_DIR/../env_manager_main.py "$@"

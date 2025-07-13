@@ -4,4 +4,4 @@ BIN_DIR=$(dirname $(realpath $0))
 export PATH="${BIN_DIR}:${PATH}"
 source _conda_root
 
-$CONDA_ROOT/bin/python $BIN_DIR/../main.py "$@"
+$CONDA_ROOT/bin/python $BIN_DIR/../comfy_env_main.py "$@"

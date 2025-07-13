@@ -3,16 +3,16 @@ import traceback
 from tempfile import gettempdir
 from pathlib import Path
 
-from comfyenv.exceptions import (NoEnvFoundError, NoProcessFoundError,
+from comfy_env.exceptions import (NoEnvFoundError, NoProcessFoundError,
                                  AlreadyRunningError)
-from comfyenv.env_config import EnvConfig, manage_config, get_envpref
-from comfyenv.args import get_args
-from comfyenv.create import create_update_env
-from comfyenv.activate import activate_env
-from comfyenv.run import run_comfyui, stop_comfyui
-from comfyenv.list import list_envs
-from comfyenv.remove import remove_env
-from comfyenv.version import __version__
+from comfy_env.env_config import EnvConfig, manage_config, get_envpref
+from comfy_env.args import get_args
+from comfy_env.create import create_update_env
+from comfy_env.activate import activate_env
+from comfy_env.run import run_comfyui, stop_comfyui
+from comfy_env.list import list_envs
+from comfy_env.remove import remove_env
+from comfy_env.version import __version__
 
 # Variables
 ROOT_DIR = Path(__file__).resolve().parent
