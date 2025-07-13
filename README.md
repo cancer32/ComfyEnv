@@ -1,5 +1,7 @@
 # ComfyEnv: An Environment Manager for ComfyUI
 
+![image info](./images/ComfyEnvManager.png)
+
 ComfyUI is incredibly flexible, but installing different custom nodes or dependencies often leads to conflicts that can break existing setups. **ComfyEnv** helps you manage isolated environments, so each project or node set can live in its own stable sandbox.
 
 > **Supported Platforms:**
@@ -15,8 +17,8 @@ ComfyUI is incredibly flexible, but installing different custom nodes or depende
 - Isolated **Conda environments** per ComfyUI setup
 - Install and run ComfyUI without dependency conflicts
 - Clean separation of node configurations
-- CLI tool for managing environments
-- Built-in stop/start functionality for running ComfyUI instances
+- CLI and GUI interface for managing environments
+- Flexibility to configure the environments
 
 ---
 
@@ -36,9 +38,11 @@ conda activate
 git clone https://github.com/cancer32/ComfyEnv.git
 cd ComfyEnv
 pip install -r requirements.txt
+
+chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 ```
 
-### ⚠️ Set Environment Variable
+### ⚠️ Set CONDA_ROOT envirnoment variable (if it gives error) 
 
 - Set the `CONDA_ROOT` environment variable to the root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the user's startup profile
 - **OR** edit the `bin/_conda_root[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save.
@@ -68,10 +72,11 @@ pip install -r requirements.txt
 ```
 ComfyEnv/
 ├── bin/
-│   └── comfy-env         # The main CLI script or executable
+│   └── comfy-env        # The main CLI interface
+│   └── env-manager      # The main GUI interface
 ├── envs/                # Contains all isolated environments
 │   └── <env_name>/      # A specific ComfyUI environment
-├── models/              # Shared models directory accessible from all environments
+├── models/              # Shared models directory accessible to all environments
 │   └── checkpoints/
 │   └── vae/
 │   └── .../
@@ -79,31 +84,20 @@ ComfyEnv/
 
 ---
 
-## Usage
-
-### Create a new environment
+## `comfy-env` Usage
 
 ```bash
+# Create a new environment
+# Note: Edit "torch_requirements.txt" file if you want to install specific pytorch version for environment
 bin/comfy-env create -n my-env --python=3.12 --comfyui-version=v0.3.43
-```
 
-> Note: Edit **torch_requirements.txt** file if you want to install specific pytorch version in the environment
-
-### List all environments
-
-```bash
+# List all environments
 bin/comfy-env list
-```
 
-### Run ComfyUI inside an environment
-
-```bash
+# Run ComfyUI inside an environment
 bin/comfy-env run -n my-env -- [comfyui args]
-```
 
-### Stop ComfyUI running in an environment
-
-```bash
+# Stop ComfyUI running in an environment
 bin/comfy-env stop -n my-env
 ```
 
@@ -121,4 +115,4 @@ bin/comfy-env stop -n my-env
 - [x] Activate env for manual dependency installation
 - [x] Add a env_location.json file to keep track of environments created
 - [x] Add config command to open the config of the env
-- [ ] **GUI or tray icon for quick switching** (optional)
+- [X] **GUI or tray icon for quick switching** (optional)
