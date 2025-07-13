@@ -91,5 +91,5 @@ class ConsoleWindow(QDialog):
 
     def closeEvent(self, event):
         if self.close_worker:
-            self.worker.terminate()
+            self.worker.quit()
         event.accept()
