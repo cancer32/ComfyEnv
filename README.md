@@ -67,24 +67,14 @@ chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 
 ---
 
-## Directory Structure
+## Usage
 
-```
-ComfyEnv/
-├── bin/
-│   └── comfy-env        # The main CLI interface
-│   └── env-manager      # The main GUI interface
-├── envs/                # Contains all isolated environments
-│   └── <env_name>/      # A specific ComfyUI environment
-├── models/              # Shared models directory accessible to all environments
-│   └── checkpoints/
-│   └── vae/
-│   └── .../
-```
+### GUI Interface
 
----
+- For **Windows** run `bin/env-manager.bat` file from browser
+- For **Linux** execute `bin/env-manager` file from shell
 
-## `comfy-env` Usage
+### CLI Interface
 
 ```bash
 # Create a new environment
@@ -99,4 +89,22 @@ bin/comfy-env run -n my-env -- [comfyui args]
 
 # Stop ComfyUI running in an environment
 bin/comfy-env stop -n my-env
+```
+
+---
+
+
+## Directory Structure
+
+```
+ComfyEnv/
+├── bin/
+│   └── comfy-env        # The main CLI interface
+│   └── env-manager      # The main GUI interface
+├── envs/                # Contains all isolated environments
+│   └── <env_name>/      # A specific ComfyUI environment
+├── models/              # Shared models directory accessible to all environments
+│   └── checkpoints/
+│   └── vae/
+│   └── .../
 ```
