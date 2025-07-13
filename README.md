@@ -71,7 +71,7 @@ chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 
 ### GUI Interface
 
-- For **Windows** run `bin/env-manager.bat` file from browser
+- For **Windows** run `bin/env-manager.bat` file from explorer
 - For **Linux** execute `bin/env-manager` file from shell
 
 ### CLI Interface
