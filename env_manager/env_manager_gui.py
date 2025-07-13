@@ -28,6 +28,7 @@ class EnvManagerGUI(QWidget):
         self.root_layout.addWidget(self.env_list)
 
         self.create_button = QPushButton("➕ Create")
+        self.create_button.setMinimumHeight(30)
         self.create_button.setToolTip("Create ComfyUI Environment")
         btn_row = QHBoxLayout()
         btn_row.addStretch()  # Pushes following widgets to the right
@@ -41,16 +42,7 @@ class EnvManagerGUI(QWidget):
     def connect_signals(self):
         self.create_button.clicked.connect(self.create_env)
 
-    def run(self, command):
-        subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            shell=True
-        )
-
-    def run_in_console(self, command, title="Command", refresh_after=False):
+    def run_in_console(self, command, title="Command", refresh_after=False, callback=None):
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
@@ -61,6 +53,8 @@ class EnvManagerGUI(QWidget):
         console = ConsoleWindow(title, process, self)
         if refresh_after:
             console.worker.finished.connect(self.refresh_envs)
+        if callback:
+            console.worker.finished.connect(callback)
         console.show()
 
     def refresh_envs(self):

@@ -26,45 +26,54 @@ class EnvItemWidget(QWidget):
         layout.setContentsMargins(10, 10, 10, 10)
 
         self.label = QLabel(self.env_name)
+        self.label.setStyleSheet("font-size: 12pt;")
         self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
         self.open_btn = QToolButton()
+        self.open_btn.setMinimumSize(34, 34)
         self.open_btn.setText("🌐")
         self.open_btn.setToolTip("Open in Browser")
         self.open_btn.clicked.connect(self.open_browser)
 
         self.run_btn = QToolButton()
         self.run_btn.setText("▶️")
+        self.run_btn.setMinimumSize(34, 34)
         self.run_btn.setToolTip("Run ComfyUI")
         self.run_btn.clicked.connect(self.run)
 
         self.stop_btn = QToolButton()
         self.stop_btn.setText("⏹")
+        self.stop_btn.setMinimumSize(34, 34)
         self.stop_btn.setToolTip("Stop ComfyUI")
         self.stop_btn.clicked.connect(self.stop)
 
         self.config_btn = QToolButton()
         self.config_btn.setText("⚙️")
+        self.config_btn.setMinimumSize(34, 34)
         self.config_btn.setToolTip("Open Config File")
         self.config_btn.clicked.connect(self.open_config)
 
         self.shell_btn = QToolButton()
         self.shell_btn.setText("🖥")
+        self.shell_btn.setMinimumSize(34, 34)
         self.shell_btn.setToolTip("Open Shell")
         self.shell_btn.clicked.connect(self.shell)
 
         self.console_btn = QToolButton()
         self.console_btn.setText("📜")
+        self.console_btn.setMinimumSize(34, 34)
         self.console_btn.setToolTip("Open Console Output")
         self.console_btn.clicked.connect(self.open_console)
 
         self.update_btn = QToolButton()
         self.update_btn.setText("🔄")
+        self.update_btn.setMinimumSize(34, 34)
         self.update_btn.setToolTip("Update Environment")
         self.update_btn.clicked.connect(self.update_env)
 
         self.delete_btn = QToolButton()
         self.delete_btn.setText("🗑️")
+        self.delete_btn.setMinimumSize(34, 34)
         self.delete_btn.setToolTip("Delete Environment")
         self.delete_btn.clicked.connect(self.delete_env)
 
@@ -100,6 +109,18 @@ class EnvItemWidget(QWidget):
         self.update_btn.setHidden(is_running)
         self.delete_btn.setHidden(is_running)
         self.config_btn.setHidden(is_running)
+
+    def mark_processing(self, updating, icon=None):
+        label = f'{self.env_name}  {icon}' if updating else self.env_name
+        self.label.setText(label)
+        self.open_btn.setHidden(updating)
+        self.stop_btn.setHidden(updating)
+        self.console_btn.setHidden(updating)
+        self.run_btn.setHidden(updating)
+        self.update_btn.setHidden(updating)
+        self.delete_btn.setHidden(updating)
+        self.config_btn.setHidden(updating)
+        self.shell_btn.setHidden(updating)
 
     def run(self):
         if self.is_running:
@@ -218,8 +239,13 @@ class EnvItemWidget(QWidget):
         webbrowser.open(url)
 
     def open_config(self):
-        command = f"comfy-env config -n {shlex.quote(self.env_name)} --edit"
-        self.parent_gui.run(command)
+        subprocess.Popen(
+            f"comfy-env config -n {self.env_name} --edit",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            shell=True
+        )
 
     def open_console(self):
         process = self.parent_gui.running_processes.get(self.env_name)
@@ -232,21 +258,35 @@ class EnvItemWidget(QWidget):
             self, "Update Environment",
             f"Do you want to update environment '{self.env_name}'?"
         )
-        if confirm == QMessageBox.Yes:
-            self.parent_gui.run_in_console(
-                f"comfy-env update -n {self.env_name}",
-                title=f"Updating {self.env_name}",
-                refresh_after=True
-            )
+        if confirm == QMessageBox.No:
+            return
+
+        self.mark_processing(True, icon="🔄")
+        def on_process_finished(code):
+            self.mark_processing(False)
+
+        self.parent_gui.run_in_console(
+            f"comfy-env update -n {self.env_name}",
+            title=f"Updating {self.env_name}",
+            refresh_after=True,
+            callback=on_process_finished
+        )
 
     def delete_env(self):
         confirm = QMessageBox.question(
             self, "Confirm Delete",
             f"Are you sure you want to delete environment '{self.env_name}'?"
         )
-        if confirm == QMessageBox.Yes:
-            self.parent_gui.run_in_console(
-                f"comfy-env remove -n {self.env_name} -y",
-                title=f"Delete: {self.env_name}",
-                refresh_after=True
-            )
+        if confirm == QMessageBox.No:
+            return
+
+        self.mark_processing(True, icon="🗑️")
+        def on_process_finished(code):
+            self.mark_processing(False)
+
+        self.parent_gui.run_in_console(
+            f"comfy-env remove -n {self.env_name} -y",
+            title=f"Delete: {self.env_name}",
+            refresh_after=True,
+            callback=on_process_finished
+        )
