@@ -12,7 +12,7 @@ def remove_env(config):
     env_dir = Path(config["env_dir"])
     if not env_dir.exists():
         raise NoEnvFoundError(f'Could not find comfyui environment: '
-                         f'"{config["env_name"]}"')
+                              f'"{config["env_name"]}"')
 
     if not config["yes"]:
         ans = input(f'Are you sure want to remove '

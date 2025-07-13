@@ -4,7 +4,7 @@ from tempfile import gettempdir
 from pathlib import Path
 
 from comfy_env.exceptions import (NoEnvFoundError, NoProcessFoundError,
-                                 AlreadyRunningError)
+                                  AlreadyRunningError)
 from comfy_env.env_config import EnvConfig, manage_config, get_envpref
 from comfy_env.args import get_args
 from comfy_env.create import create_update_env
@@ -71,7 +71,7 @@ def main():
         elif args['command'] == "config":
             manage_config(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "remove":
-            remove_env(get_config(args=args))
+            remove_env(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "version":
             print(__version__, flush=True)
     except (NoEnvFoundError, NoProcessFoundError,
