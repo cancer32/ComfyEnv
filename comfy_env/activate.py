@@ -16,4 +16,5 @@ def activate_env(config):
         exec {shell} --noprofile --norc;
         '''
         subprocess.run(f'{shell} -i -c "{bash_script}"',
+                       shell=True,
                        cwd=config["env_dir"])
