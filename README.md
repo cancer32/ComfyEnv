@@ -115,3 +115,4 @@ ComfyEnv/
 - [ ] Replace the models path and set extra_model_path_config.yml from dynamically while running the environment
 - [ ] Change module names to avoid naming conflict
 - [ ] Add status command to get the running status of the comfy environment
+- [ ] Instead of just name activate conda env using env full directory path 
