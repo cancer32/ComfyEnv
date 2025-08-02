@@ -7,11 +7,11 @@ from comfy_env.exceptions import (NoEnvFoundError, NoProcessFoundError,
                                   AlreadyRunningError)
 from comfy_env.env_config import EnvConfig, manage_config, get_envpref
 from comfy_env.args import get_args
-from comfy_env.create import create_update_env
+from comfy_env.create_env import create_update_env
 from comfy_env.activate import activate_env
-from comfy_env.run import run_comfyui, stop_comfyui
-from comfy_env.list import list_envs
-from comfy_env.remove import remove_env
+from comfy_env.run_env import run_comfyui, stop_comfyui
+from comfy_env.list_env import list_envs
+from comfy_env.remove_env import remove_env
 from comfy_env.version import __version__
 
 # Variables
