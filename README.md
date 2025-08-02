@@ -43,7 +43,7 @@ pip install -r requirements.txt
 chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 ```
 
-### ⚠️ Set CONDA_ROOT envirnoment variable (if it gives error) 
+### ⚠️ Set CONDA_ROOT environment variable (if it gives error) 
 
 - Set the `CONDA_ROOT` environment variable to the root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the user's startup profile
 - **OR** edit the `bin/_conda_root[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save.
@@ -117,4 +117,4 @@ ComfyEnv/
 - [ ] Change module names to avoid naming conflict
 - [ ] Add status command to get the running status of the comfy environment
 - [ ] Instead of just name activate conda env using env full directory path
-- [ ] Custom port is not getting set while openning comfy through browser button
+- [ ] Custom port is not getting set while opening comfy through browser button
