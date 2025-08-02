@@ -28,6 +28,7 @@ Before using ComfyEnv, make sure the following are installed:
 
 - [Miniconda3](https://www.anaconda.com/download/success)
 - [Git](https://git-scm.com/)
+- NVIDIA GPU (Required) - AMD and Intel GPUs are not supported
 
 ---
 
