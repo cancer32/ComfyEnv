@@ -8,9 +8,17 @@ def run_comfyui(config):
           flush=True)
 
     # Setting the arguments in config
-    comfyui_args = config.get("comfyui_args", ['--port', '8188'])
+    comfyui_args = config.get("comfyui_args", [])
+    
+    # Remove '--' if present
     if '--' in comfyui_args:
         comfyui_args.remove('--')
+    
+    # Check if port is specified in args
+    if '--port' not in comfyui_args:
+        # Add default port if not specified
+        comfyui_args.extend(['--port', '8188'])
+    
     config["comfyui_args"] = comfyui_args
     config.dump()
 
