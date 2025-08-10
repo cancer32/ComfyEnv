@@ -71,6 +71,12 @@ def get_args():
     run_parser.add_argument("comfyui_args", nargs=argparse.REMAINDER,
                             help="Additional arguments passed to ComfyUI")
 
+    # comfy_env status -n <env-name>
+    status_parser = subparsers.add_parser("status",
+                                          help="Get the status of a ComfyUI environment")
+    status_parser.add_argument("-n", "--name", required=True, dest="env_name",
+                               help="Name of the environment to check")
+
     # comfy_env version
     version_parser = subparsers.add_parser("version",
                                            help="Print the comfy_env version")

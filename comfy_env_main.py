@@ -12,6 +12,7 @@ from comfy_env.activate import activate_env
 from comfy_env.run_env import run_comfyui, stop_comfyui
 from comfy_env.list_env import list_envs
 from comfy_env.remove_env import remove_env
+from comfy_env.status_env import get_env_status
 from comfy_env.version import __version__
 
 # Variables
@@ -72,6 +73,8 @@ def main():
             manage_config(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "remove":
             remove_env(get_config(args=args, config_path=find_config(args)))
+        elif args['command'] == "status":
+            get_env_status(get_config(args=args, config_path=find_config(args)))
         elif args['command'] == "version":
             print(__version__, flush=True)
     except (NoEnvFoundError, NoProcessFoundError,

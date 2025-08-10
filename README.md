@@ -90,6 +90,9 @@ bin/comfy-env run -n my-env -- [comfyui args]
 
 # Stop ComfyUI running in an environment
 bin/comfy-env stop -n my-env
+
+# Get status of an environment (returns JSON with running state, PID, port, etc.)
+bin/comfy-env status -n my-env
 ```
 
 ---
@@ -114,7 +117,6 @@ ComfyEnv/
 # TODO:
 - [ ] Check if env exists before creating a new one with the same name
 - [ ] Replace the models path and set extra_model_path_config.yml from dynamically while running the environment
-- [ ] Change module names to avoid naming conflict
-- [ ] Add status command to get the running status of the comfy environment
-- [ ] Instead of just name activate conda env using env full directory path
+- [X] Change module names to avoid naming conflict
+- [X] Add status command to get the running status of the comfy environment
 - [ ] Custom port is not getting set while opening comfy through browser button
