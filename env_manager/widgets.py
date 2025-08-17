@@ -150,7 +150,8 @@ class EnvItemWidget(QWidget):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            shell=True
+            shell=True,
+            encoding='utf-8'
         )
 
         self.parent_gui.running_processes[self.env_name] = process
@@ -178,7 +179,8 @@ class EnvItemWidget(QWidget):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            shell=True
+            shell=True,
+            encoding='utf-8'
         )
 
         if wait:
@@ -201,7 +203,8 @@ class EnvItemWidget(QWidget):
             # Launch in new cmd window
             subprocess.Popen(
                 ["cmd.exe", "/k", command],
-                creationflags=subprocess.CREATE_NEW_CONSOLE
+                creationflags=subprocess.CREATE_NEW_CONSOLE,
+                encoding='utf-8'
             )
 
         elif system == "Linux":
@@ -211,7 +214,8 @@ class EnvItemWidget(QWidget):
             for term in terminals:
                 if shutil.which(term):
                     subprocess.Popen(
-                        [term, "--", "bash", "-c", f"{command}; exec bash"])
+                        [term, "--", "bash", "-c", f"{command}; exec bash"],
+                        encoding='utf-8')
                     break
             else:
                 QMessageBox.warning(self, "Terminal Not Found",
@@ -225,7 +229,7 @@ class EnvItemWidget(QWidget):
                 do script "{command}"
             end tell
             '''
-            subprocess.Popen(["osascript", "-e", apple_script])
+            subprocess.Popen(["osascript", "-e", apple_script], encoding='utf-8')
         else:
             QMessageBox.warning(self, "Unsupported Platform",
                                 f"{system} is not supported.")
@@ -243,7 +247,8 @@ class EnvItemWidget(QWidget):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            shell=True
+            shell=True,
+            encoding='utf-8'
         )
 
     def open_console(self):

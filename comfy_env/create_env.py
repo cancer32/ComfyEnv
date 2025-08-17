@@ -8,6 +8,7 @@ from .common import copy_extra_model_config
 
 
 def run_command(cmd, raise_error=True, **kwargs):
+    kwargs['encoding'] = 'utf-8'
     process = subprocess.Popen(cmd, **kwargs)
     process.communicate()  # wait for the process to finish
     if raise_error and process.returncode != 0:

@@ -54,6 +54,7 @@ class EnvManagerGUI(QWidget):
             stderr=subprocess.STDOUT,
             text=True,
             shell=True,
+            encoding='utf-8',
             **group_args
         )
         console = ConsoleWindow(title, process, parent=self,
@@ -70,7 +71,8 @@ class EnvManagerGUI(QWidget):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
-            shell=True
+            shell=True,
+            encoding='utf-8'
         )
         output, _ = process.communicate()
 
