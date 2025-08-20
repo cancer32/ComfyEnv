@@ -229,12 +229,16 @@ class EnvItemWidget(QWidget):
                 do script "{command}"
             end tell
             '''
-            subprocess.Popen(["osascript", "-e", apple_script], encoding='utf-8')
+            subprocess.Popen(["osascript", "-e", apple_script],
+                             encoding='utf-8')
         else:
             QMessageBox.warning(self, "Unsupported Platform",
                                 f"{system} is not supported.")
 
     def open_browser(self):
+        config = subprocess.check_output(f'comfy-env config -n {self.env_name}',
+                                         shell=True).decode()
+        self.config = json.loads(config)
         args = self.config.get("comfyui_args", [])
         port_match = re.search(r"--port\s+(\d+)", ' '.join(args))
         port = port_match.group(1) if port_match else "8188"
