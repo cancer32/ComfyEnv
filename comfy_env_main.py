@@ -35,8 +35,10 @@ def get_config(args, config_path=None):
         config["TEMP"] = gettempdir()
         config["USERNAME"] = os.getlogin()
         config["COMFYENV_ROOT"] = str(ROOT_DIR)
-        config["conda_env_name"] = args.get("conda_env_name",
+        config["pkgmgr"] = "conda" if os.environ.get("CONDA_ROOT") else "micromamba"
+        config["pkgmgr_env_name"] = args.get("pkgmgr_env_name",
                                             config["env_name"])
+
     # Get envpref_path from default config always
     config["envpref_path"] = default_config["envpref_path"]
     return config

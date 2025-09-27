@@ -22,8 +22,11 @@ def run_comfyui(config):
     config["comfyui_args"] = comfyui_args
     config.dump()
 
+    run_cmd_prefix = f'{config["pkgmgr"]} run --attach stdout,sterr'
+    if config["pkgmgr"] == "conda":
+        run_cmd_prefix = f'{config["pkgmgr"]} run --live-stream'
     command = (
-        f'conda run --live-stream -n {config["conda_env_name"]} '
+        f'{run_cmd_prefix} -n {config["pkgmgr_env_name"]} '
         f'python \"{config["comfyenv_root"]}/comfyui_main.py\" {config["env_config_path"]}'
     )
     subprocess.run(command, shell=True)

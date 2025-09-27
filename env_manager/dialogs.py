@@ -80,12 +80,12 @@ class CreateEnvDialog(QDialog):
             "\nLeave blank to use latest."
         )
 
-        self.conda_env_input = labeled_input(
+        self.pkgmgr_env_input = labeled_input(
             "Conda Environment Name (optional):")
-        self.conda_env_input.setMaxLength(16)
-        self.conda_env_input.setValidator(QRegularExpressionValidator(
+        self.pkgmgr_env_input.setMaxLength(16)
+        self.pkgmgr_env_input.setValidator(QRegularExpressionValidator(
             QRegularExpression(r"^[a-zA-Z0-9_-]+$")))
-        self.conda_env_input.setToolTip(
+        self.pkgmgr_env_input.setToolTip(
             "Give an existing Conda environment name OR"
             "\nIf left blank, a new Conda environment will be created with the same name as this environment."
         )
@@ -129,8 +129,8 @@ class CreateEnvDialog(QDialog):
             args += ["--user-root", ur]
         if er := self.envs_root_input.text().strip():
             args += ["--envs-root", er]
-        if ce := self.conda_env_input.text().strip():
-            args += ["--conda-env-name", ce]
+        if ce := self.pkgmgr_env_input.text().strip():
+            args += ["--pkgmgr-env-name", ce]
         if ver := self.comfyui_version_input.text().strip():
             args += ["--comfyui-version", ver]
 

@@ -24,8 +24,8 @@ def get_args():
                                help="Custom user root directory path")
     create_parser.add_argument("--envs-root",
                                help="Custom environment root directory path")
-    create_parser.add_argument("--conda-env-name",
-                               help="Optional: custom name for the conda environment")
+    create_parser.add_argument("--pkgmgr-env-name",
+                               help="Optional: custom name for the pkgmgr environment")
     create_parser.add_argument("--comfyui-version",
                                help="ComfyUI version tag to checkout, eg 'v0.3.43' default: latest")
 

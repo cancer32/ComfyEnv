@@ -1,10 +1,11 @@
 {
+    "pkgmgr": "micromamba",
     "python": "3.12.*",
     "comfyui_version": "latest",
     "comfyenv_dir_name": "comfyenv",
     "env_dir_name": "envs",
     "env_name": "default",
-    "conda_env_name": "${env_name}",
+    "pkgmgr_env_name": "${env_name}",
     "models_dir_name": "models",
     "extra_model_paths_config": "extra_model_paths.yaml",
     "env_config_name": "config.json",

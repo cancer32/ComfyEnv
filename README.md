@@ -117,6 +117,4 @@ ComfyEnv/
 # TODO:
 - [ ] Check if env exists before creating a new one with the same name
 - [ ] Replace the models path and set extra_model_path_config.yml from dynamically while running the environment
-- [X] Change module names to avoid naming conflict
-- [X] Add status command to get the running status of the comfy environment
-- [X] Custom port is not getting set while opening comfy through browser button
+- [ ] Add native support for micromamba

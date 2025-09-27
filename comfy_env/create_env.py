@@ -23,20 +23,24 @@ def create_update_env(config):
     os.makedirs(f"{config['user_dir']}/output", exist_ok=True)
     os.makedirs(config['envs_root'], exist_ok=True)
     os.makedirs(config['user_dir'], exist_ok=True)
+    
+    run_cmd_prefix = f'{config["pkgmgr"]} run --attach stdout,sterr'
+    if config["pkgmgr"] == "conda":
+        run_cmd_prefix = f'{config["pkgmgr"]} run --live-stream'
 
-    # Check if conda env exists
-    conda_env_exists = False
-    conda_envs = JsonParser.loads(
-        subprocess.check_output('conda env list --json', shell=True))
-    for conda_env in conda_envs['envs']:
-        if config["conda_env_name"] == Path(conda_env).name:
-            conda_env_exists = True
+    # Check if pkgmgr env exists
+    pkgmgr_env_exists = False
+    pkgmgr_envs = JsonParser.loads(
+        subprocess.check_output(f'{config["pkgmgr"]} env list --json', shell=True))
+    for pkgmgr_env in pkgmgr_envs['envs']:
+        if config["pkgmgr_env_name"] == Path(pkgmgr_env).name:
+            pkgmgr_env_exists = True
             break
 
-    if not conda_env_exists:
+    if not pkgmgr_env_exists:
         print(f"Creating environment '{config['env_name']}' "
               f"with Python {config['python']}", flush=True)
-        run_command(f'conda create -y -n {config["conda_env_name"]} python=={config["python"]}',
+        run_command(f'{config["pkgmgr"]} create -y -n {config["pkgmgr_env_name"]} python=={config["python"]}',
                     shell=True)
 
     # Installing pytorch
@@ -46,7 +50,7 @@ def create_update_env(config):
     torch_dep = (torch_requirements.read_text()
                  .replace('\n', ' ')
                  .replace('{TORCH_CUDA}', get_pytorch_cuda()))
-    run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
+    run_command(f'{run_cmd_prefix} -n {config["pkgmgr_env_name"]} '
                 f'pip install {torch_dep}',
                 shell=True)
 
@@ -66,7 +70,7 @@ def create_update_env(config):
                     shell=True)
 
     # Installing comfyui's requirements.txt
-    run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
+    run_command(f'{run_cmd_prefix} -n {config["pkgmgr_env_name"]} '
                 f'pip install psutil==7.0.0 '
                 f'-r "{config["comfyui_root"]}/requirements.txt" ',
                 shell=True)
@@ -80,7 +84,7 @@ def create_update_env(config):
         run_command(f'git clone "https://github.com/ltdrdata/ComfyUI-Manager" '
                     f'"{comfy_manager_dir}"',
                     shell=True)
-    run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
+    run_command(f'{run_cmd_prefix} -n {config["pkgmgr_env_name"]} '
                 f'pip install '
                 f'-r "{comfy_manager_dir}/requirements.txt" ',
                 shell=True)

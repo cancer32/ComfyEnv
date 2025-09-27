@@ -20,7 +20,7 @@ def remove_env(config):
         if ans.lower() not in ('yes', 'y'):
             return
     print(f'Removing environment "{config['env_name']}"', flush=True)
-    subprocess.run(f'conda env remove -y -n {config["conda_env_name"]}',
+    subprocess.run(f'{config["pkgmgr"]} env remove -y -n {config["pkgmgr_env_name"]}',
                    shell=True)
 
     shell = get_user_shell()
