@@ -46,9 +46,9 @@ chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 ### ⚠️ Set CONDA_ROOT environment variable (if it gives error) 
 
 - Set the `CONDA_ROOT` environment variable to the root path of your Miniconda installation eg. `C:\ProgramData\miniconda3` in the user's startup profile
-- **OR** edit the `bin/_conda_root[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save.
+- **OR** edit the `bin/_set_env[.bat]`, uncomment the below line, set the `CONDA_ROOT` path and Save.
 
-  **Windows** `bin/_conda_root.bat`
+  **Windows** `bin/_set_env.bat`
 
   ```bat
   REM ##########################################
@@ -57,7 +57,7 @@ chmod +x bin/comfy-env bin/env-manager            # For Linux Only
   REM ##########################################
   ```
 
-  **Linux** `bin/_conda_root`
+  **Linux** `bin/_set_env`
 
   ```bash
   ##########################################
