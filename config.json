@@ -1,5 +1,5 @@
 {
-    "python": "3.12.*",
+    "python": "3.13.*",
     "comfyui_version": "latest",
     "comfyenv_dir_name": "comfyenv",
     "env_dir_name": "envs",

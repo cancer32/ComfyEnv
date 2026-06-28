@@ -41,9 +41,9 @@ def create_update_env(config):
 
     # Installing pytorch
     print(f'Installing pytorch...', flush=True)
-    torch_requirements = (Path(config["COMFYENV_ROOT"])
-                          / "torch_requirements.txt")
-    torch_dep = (torch_requirements.read_text()
+    nvidia_requirements = (Path(config["COMFYENV_ROOT"])
+                          / "nvidia_requirements.txt")
+    torch_dep = (nvidia_requirements.read_text()
                  .replace('\n', ' ')
                  .replace('{TORCH_CUDA}', get_pytorch_cuda()))
     run_command(f'conda run --live-stream -n {config["conda_env_name"]} '
@@ -61,7 +61,7 @@ def create_update_env(config):
         run_command(cmd, shell=True, cwd=comfyui_root)
         run_command('git stash pop', raise_error=False, shell=True, cwd=comfyui_root)
     else:
-        run_command(f'git clone "https://github.com/comfyanonymous/ComfyUI.git" '
+        run_command(f'git clone "https://github.com/Comfy-Org/ComfyUI.git" '
                     f'"{comfyui_root}"',
                     shell=True)
 

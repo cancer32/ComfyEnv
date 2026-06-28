@@ -7,7 +7,7 @@ import urllib.error
 def get_cuda_version():
     try:
         result = subprocess.check_output(["nvidia-smi"]).decode()
-        match = re.search(r"CUDA Version:\s+(\d+\.\d+)", result)
+        match = re.search(r"CUDA.*Version:\s+(\d+\.\d+)", result)
         return match.group(1) if match else None
     except (subprocess.CalledProcessError, FileNotFoundError):
         return
@@ -22,7 +22,7 @@ def get_pytorch_cuda(min_major=11, min_minor=1):
     if not cuda_version:
         print("No supported CUDA version found in PyTorch index. using cpu",
               flush=True)
-        return 'cpu'
+        return "cpu"
 
     try:
         major, minor = map(int, cuda_version.split('.'))
