@@ -1,19 +1,34 @@
 models:
     base_path: MODELS_DIR
     checkpoints: checkpoints/
-    clip: clip/
-    clip_vision: clip_vision/
-    controlnet: controlnet/
-    diffusers: diffusers/
-    diffusion_models: diffusion_models/
-    embeddings: embeddings/
-    gligen: gligen/
-    hypernetworks: hypernetworks/
+    configs: configs/
     loras: loras/
-    photomaker: photomaker/
-    style_models: style_models/
-    text_encoders: text_encoders/
-    unet: unet/
-    upscale_models: upscale_models/
     vae: vae/
+    text_encoders: |
+        text_encoders/
+        clip/
+    diffusion_models: |
+        unet/
+        diffusion_models/
+    clip_vision: clip_vision/
+    style_models: style_models/
+    embeddings: embeddings/
+    diffusers: diffusers/
     vae_approx: vae_approx/
+    controlnet: |
+        controlnet/
+        t2i_adapter/
+    gligen: gligen/
+    upscale_models: upscale_models/
+    latent_upscale_models: latent_upscale_models/
+    custom_nodes: custom_nodes/
+    hypernetworks: hypernetworks/
+    photomaker: photomaker/
+    classifiers: classifiers/
+    model_patches: model_patches/
+    audio_encoders: audio_encoders/
+    background_removal: background_removal/
+    frame_interpolation: frame_interpolation/
+    geometry_estimation: geometry_estimation/
+    optical_flow: optical_flow/
+    detection: detection/

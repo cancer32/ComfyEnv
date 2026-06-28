@@ -63,11 +63,11 @@ class CreateEnvDialog(QDialog):
             "\nAllowed: letters, numbers, '_' and '-', max 16 characters."
         )
 
-        self.python_input = labeled_input("Python Version (default: 3.12.*):")
+        self.python_input = labeled_input("Python Version (default: 3.13.*):")
         self.python_input.setValidator(QRegularExpressionValidator(
             QRegularExpression(r"^[0-9.*]+$")))
         self.python_input.setToolTip(
-            "Specify Python version (e.g., 3.10, 3.12.*)."
+            "Specify Python version (e.g., 3.12, 3.13.*)."
             "\nLeave blank for default."
         )
 

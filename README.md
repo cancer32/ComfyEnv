@@ -79,8 +79,8 @@ chmod +x bin/comfy-env bin/env-manager            # For Linux Only
 
 ```bash
 # Create a new environment
-# Note: Edit "torch_requirements.txt" file if you want to install specific pytorch version for environment
-bin/comfy-env create -n my-env --python=3.12 --comfyui-version=v0.3.43
+# Note: Edit "nvidia_requirements.txt" file if you want to install specific pytorch version for environment
+bin/comfy-env create -n my-env --python=3.13 --comfyui-version=v0.26.2
 
 # List all environments
 bin/comfy-env list

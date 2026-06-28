@@ -19,7 +19,7 @@ def get_args():
     create_parser.add_argument("-n", "--name", required=True,
                                dest="env_name", help="Name of the environment to create")
     create_parser.add_argument("--python",
-                               help="Python version for the environment (e.g., 3.12.*)")
+                               help="Python version for the environment (e.g., 3.13.*)")
     create_parser.add_argument("--user-root",
                                help="Custom user root directory path")
     create_parser.add_argument("--envs-root",
